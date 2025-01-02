@@ -1,0 +1,123 @@
+import os
+from dotenv import load_dotenv
+from sqlalchemy import (
+    PrimaryKeyConstraint,
+    create_engine,
+    ForeignKey,
+    Text,
+    TIMESTAMP,
+    CheckConstraint,
+)
+from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped, relationship
+from sqlalchemy.sql import func
+from datetime import datetime
+from typing import Optional
+from db.db_types import str_100, str_256
+
+
+load_dotenv()
+
+user = os.getenv("POSTGRES_USER")
+password = os.getenv("POSTGRES_PASSWORD")
+host = os.getenv("POSTGRES_HOST", "localhost")
+port = os.getenv("POSTGRES_PORT", 5432)
+db_name = os.getenv("POSTGRES_DB_NAME", "postgres")
+
+db_url = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{db_name}"
+
+# add echo=True to echo the generated SQL
+engine = create_engine(db_url)
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column()
+    email: Mapped[str_100] = mapped_column()
+    email_verified: Mapped[datetime] = mapped_column()
+    hashed_password: Mapped[str_256] = mapped_column()
+    image: Mapped[Optional[str]] = mapped_column()
+    recipes: Mapped[list["Recipe"]] = relationship()
+    categories: Mapped[list["Category"]] = relationship()
+
+
+class Recipe(Base):
+    __tablename__ = "recipes"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str_256] = mapped_column()
+    photo_url: Mapped[Optional[str]] = mapped_column(Text)
+    rating: Mapped[Optional[int]] = mapped_column(
+        CheckConstraint("rating BETWEEN 1 AND 5", name="check_rating_range")
+    )
+    created_at: Mapped[str] = mapped_column(
+        TIMESTAMP, default=func.current_timestamp(), nullable=False
+    )
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE")
+    )
+    user: Mapped["User"] = relationship(back_populates="recipes")
+    ingredients: Mapped[list["Ingredient"]] = relationship()
+    steps: Mapped[list["Step"]] = relationship()
+    categories: Mapped[list["Category"]] = relationship(
+        secondary="recipe_category", back_populates="recipes"
+    )
+
+
+class Ingredient(Base):
+    __tablename__ = "ingredients"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    ingredient: Mapped[str_256] = mapped_column()
+    quantity: Mapped[Optional[str_256]] = mapped_column()
+    recipe_id: Mapped[int] = mapped_column(
+        ForeignKey("recipes.id", ondelete="CASCADE")
+    )
+    recipe: Mapped["Recipe"] = relationship(back_populates="ingredients")
+
+
+class Step(Base):
+    __tablename__ = "steps"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    step_number: Mapped[int] = mapped_column()
+    step: Mapped[str] = mapped_column(Text)
+    recipe_id: Mapped[int] = mapped_column(
+        ForeignKey("recipes.id", ondelete="CASCADE")
+    )
+    recipe: Mapped["Recipe"] = relationship(back_populates="steps")
+
+
+class Category(Base):
+    __tablename__ = "categories"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str_100] = mapped_column()
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE")
+    )
+    user: Mapped["User"] = relationship(back_populates="categories")
+    recipes: Mapped[list["Recipe"]] = relationship(
+        secondary="recipe_category", back_populates="categories"
+    )
+
+
+class RecipeCategory(Base):
+    __tablename__ = "recipe_category"
+
+    category_id: Mapped[int] = mapped_column(
+        ForeignKey("categories.id", ondelete="CASCADE")
+    )
+    recipe_id: Mapped[int] = mapped_column(
+        ForeignKey("recipes.id", ondelete="CASCADE")
+    )
+
+    __table_args__ = (PrimaryKeyConstraint("category_id", "recipe_id"),)
+
+
+Base.metadata.create_all(engine)
