@@ -3,9 +3,8 @@ Pydantic Models for Users.
 """
 
 from pydantic import BaseModel
-
-from schema.categories import CategoryResponse
-from schema.recipes import RecipeResponse
+from api.schema.categories import CategoryResponse
+from api.schema.recipes import RecipeResponse
 
 
 class UserRequest(BaseModel):
@@ -37,7 +36,8 @@ class UserResponse(BaseModel):
         user_dict = super().model_validate(obj).model_dump()
         # Manually serialize the categories
         user_dict["categories"] = [
-            CategoryResponse.model_validate(category) for category in obj.categories
+            CategoryResponse.model_validate(category)
+            for category in obj.categories
         ]
 
         user_dict["recipes"] = [

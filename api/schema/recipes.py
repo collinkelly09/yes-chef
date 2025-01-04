@@ -2,8 +2,8 @@ from pydantic import BaseModel
 from typing import List
 from datetime import datetime
 
-from schema.ingredients import IngredientResponse
-from schema.steps import StepResponse
+from api.schema.ingredients import IngredientResponse
+from api.schema.steps import StepResponse
 
 
 class RecipeRequest(BaseModel):

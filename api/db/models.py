@@ -1,5 +1,3 @@
-import os
-from dotenv import load_dotenv
 from sqlalchemy import (
     PrimaryKeyConstraint,
     create_engine,
@@ -8,22 +6,21 @@ from sqlalchemy import (
     TIMESTAMP,
     CheckConstraint,
 )
+from api.utils.config import (
+    POSTGRES_USER,
+    POSTGRES_PASSWORD,
+    POSTGRES_HOST,
+    POSTGRES_PORT,
+    POSTGRES_DB_NAME,
+)
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped, relationship
 from sqlalchemy.sql import func
 from datetime import datetime
 from typing import Optional
-from db.db_types import str_100, str_256
+from api.db.db_types import str_100, str_256
 
 
-load_dotenv()
-
-user = os.getenv("POSTGRES_USER")
-password = os.getenv("POSTGRES_PASSWORD")
-host = os.getenv("POSTGRES_HOST", "localhost")
-port = os.getenv("POSTGRES_PORT", 5432)
-db_name = os.getenv("POSTGRES_DB_NAME", "postgres")
-
-db_url = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{db_name}"
+db_url = f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB_NAME}"
 
 # add echo=True to echo the generated SQL
 engine = create_engine(db_url)
