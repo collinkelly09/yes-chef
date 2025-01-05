@@ -66,7 +66,6 @@ async def try_get_jwt_user_data(
         return
     # If the payload doesn't exist, return None
     payload = await decode_jwt(fast_api_token)
-    print(payload.user, "**************************************")
     if not payload:
         return
 
@@ -106,7 +105,7 @@ def generate_jwt(user: UserWithPw) -> str:
     jwt_data = JWTPayload(
         exp=exp,
         sub=user.email,
-        user=JWTUserData(email=user.email, id=user.id),
+        user=JWTUserData(**user.model_dump()),
     )
     encoded_jwt = jwt.encode(
         jwt_data.model_dump(), SIGNING_KEY, algorithm=ALGORITHMS.HS256

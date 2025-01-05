@@ -19,7 +19,7 @@ class UserRequest(BaseModel):
 
 class UserLoginRequest(BaseModel):
     """
-    Represents a the parameters needed to create a new user
+    Represents a the parameters needed to log an existing user in
     """
 
     email: str
@@ -33,6 +33,7 @@ class UserResponse(BaseModel):
 
     id: int
     name: str
+    email: str
     categories: list
     recipes: list
 
