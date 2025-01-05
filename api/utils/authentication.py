@@ -5,7 +5,7 @@ Helper functions for implementing authentication
 import os
 import bcrypt
 from calendar import timegm
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from fastapi import Cookie
 from jose import JWTError, jwt
 from jose.constants import ALGORITHMS
@@ -60,12 +60,13 @@ async def try_get_jwt_user_data(
             # Do something when logged in
     ```
     """
+
     # If there's no cookie at all, return None
     if not fast_api_token:
         return
-
     # If the payload doesn't exist, return None
     payload = await decode_jwt(fast_api_token)
+    print(payload.user, "**************************************")
     if not payload:
         return
 
@@ -99,11 +100,13 @@ def generate_jwt(user: UserWithPw) -> str:
     We store the user as a JWTUserData converted to a dictionary
     in the payload of the JWT
     """
-    exp = timegm((datetime.now() + timedelta(weeks=10)).utctimetuple())
+    exp = timegm(
+        (datetime.now(timezone.utc) + timedelta(weeks=10)).utctimetuple()
+    )
     jwt_data = JWTPayload(
         exp=exp,
         sub=user.email,
-        user=JWTUserData(username=user.email, id=user.id),
+        user=JWTUserData(email=user.email, id=user.id),
     )
     encoded_jwt = jwt.encode(
         jwt_data.model_dump(), SIGNING_KEY, algorithm=ALGORITHMS.HS256
