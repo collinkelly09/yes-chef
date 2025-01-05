@@ -6,24 +6,16 @@ from sqlalchemy import (
     TIMESTAMP,
     CheckConstraint,
 )
-from api.utils.config import (
-    POSTGRES_USER,
-    POSTGRES_PASSWORD,
-    POSTGRES_HOST,
-    POSTGRES_PORT,
-    POSTGRES_DB_NAME,
-)
+from utils.config import DATABASE_URL
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped, relationship
 from sqlalchemy.sql import func
 from datetime import datetime
 from typing import Optional
-from api.db.db_types import str_100, str_256
+from db.db_types import str_100, str_256
 
-
-db_url = f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB_NAME}"
 
 # add echo=True to echo the generated SQL
-engine = create_engine(db_url)
+engine = create_engine(DATABASE_URL)
 
 
 class Base(DeclarativeBase):
@@ -36,7 +28,7 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column()
     email: Mapped[str_100] = mapped_column()
-    email_verified: Mapped[datetime] = mapped_column()
+    email_verified: Mapped[Optional[datetime]] = mapped_column()
     hashed_password: Mapped[str_256] = mapped_column()
     image: Mapped[Optional[str]] = mapped_column()
     recipes: Mapped[list["Recipe"]] = relationship()

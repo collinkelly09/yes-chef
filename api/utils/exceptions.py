@@ -10,6 +10,13 @@ class UserException(HTTPException):
         super().__init__(status_code=401, detail="User must be signed in")
 
 
+class ExistingUserException(HTTPException):
+    def __init__(self):
+        super().__init__(
+            status_code=401, detail="Account exists with this email"
+        )
+
+
 class InvalidCredentialsException(HTTPException):
     def __init__(self):
         super().__init__(status_code=401, detail="Invalid credentials")
