@@ -11,7 +11,7 @@ from routers import (
     category_router,
     recipe_router,
     step_router,
-    #     recipe_to_category_router,
+    recipe_category_router,
 )
 
 app = FastAPI()
@@ -30,4 +30,4 @@ app.include_router(recipe_router.router)
 app.include_router(ingredient_router.router)
 app.include_router(step_router.router)
 app.include_router(category_router.router)
-# app.include_router(recipe_to_category_router.router, tags=["Categories"])
+app.include_router(recipe_category_router.router)
