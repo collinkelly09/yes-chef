@@ -4,9 +4,9 @@ Database Queries for Recipes
 
 from utils.exceptions import RecipeNotCreatedException
 from schema.recipes import RecipeRequest, RecipeResponse, RecipeList
+from db.models import Recipe, engine
 from sqlalchemy.orm import Session
 from sqlalchemy import delete, update
-from db.models import Recipe, engine
 
 
 class RecipeQueries:
@@ -54,7 +54,7 @@ class RecipeQueries:
 
     def update_recipe(
         self, recipe_id: int, recipe_in: RecipeRequest, user_id: int
-    ) -> RecipeResponse:
+    ) -> bool:
 
         with Session(engine) as session:
             stmt = (
