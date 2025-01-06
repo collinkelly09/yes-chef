@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import List
 
-from .recipes import RecipeResponse
+from .recipes import RecipeResponse, RecipeListResponse
 
 
 class CategoryRequest(BaseModel):
@@ -11,7 +11,7 @@ class CategoryRequest(BaseModel):
 class CategoryResponse(BaseModel):
     id: int
     name: str
-    recipes: List[RecipeResponse]
+    recipes: List[RecipeListResponse]
 
     class Config:
         from_attributes = True
