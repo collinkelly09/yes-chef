@@ -31,8 +31,6 @@ class User(Base):
     email_verified: Mapped[Optional[datetime]] = mapped_column()
     hashed_password: Mapped[str_256] = mapped_column()
     image: Mapped[Optional[str]] = mapped_column()
-    recipes: Mapped[list["Recipe"]] = relationship()
-    categories: Mapped[list["Category"]] = relationship()
 
 
 class Recipe(Base):
@@ -50,7 +48,6 @@ class Recipe(Base):
     user_id: Mapped[int] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE")
     )
-    user: Mapped["User"] = relationship(back_populates="recipes")
     ingredients: Mapped[list["Ingredient"]] = relationship()
     steps: Mapped[list["Step"]] = relationship()
     categories: Mapped[list["Category"]] = relationship(
@@ -62,7 +59,7 @@ class Ingredient(Base):
     __tablename__ = "ingredients"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    ingredient: Mapped[str_256] = mapped_column()
+    name: Mapped[str_256] = mapped_column()
     quantity: Mapped[Optional[str_256]] = mapped_column()
     recipe_id: Mapped[int] = mapped_column(
         ForeignKey("recipes.id", ondelete="CASCADE")
@@ -75,7 +72,7 @@ class Step(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     step_number: Mapped[int] = mapped_column()
-    step: Mapped[str] = mapped_column(Text)
+    name: Mapped[str] = mapped_column(Text)
     recipe_id: Mapped[int] = mapped_column(
         ForeignKey("recipes.id", ondelete="CASCADE")
     )
@@ -90,7 +87,6 @@ class Category(Base):
     user_id: Mapped[int] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE")
     )
-    user: Mapped["User"] = relationship(back_populates="categories")
     recipes: Mapped[list["Recipe"]] = relationship(
         secondary="recipe_category", back_populates="categories"
     )

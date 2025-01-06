@@ -27,6 +27,11 @@ class RecipeNotFoundException(HTTPException):
         super().__init__(status_code=404, detail="Recipe not found")
 
 
+class RecipeNotCreatedException(HTTPException):
+    def __init__(self):
+        super().__init__(status_code=404, detail="Could not create recipe")
+
+
 class CategoryNotFoundException(HTTPException):
     def __init__(self):
         super().__init__(status_code=404, detail="Category not found")

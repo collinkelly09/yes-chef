@@ -11,7 +11,7 @@ class CategoryRequest(BaseModel):
 class CategoryResponse(BaseModel):
     id: int
     name: str
-    recipes: list
+    recipes: List[RecipeResponse]
 
     class Config:
         from_attributes = True

@@ -7,9 +7,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import (
     auth_router,
-    #     ingredient_router,
+    ingredient_router,
     #     category_router,
-    #     recipe_router,
+    recipe_router,
     #     step_router,
     #     recipe_to_category_router,
 )
@@ -26,8 +26,8 @@ app.add_middleware(
 )
 
 app.include_router(auth_router.router)
-# app.include_router(recipe_router.router, tags=["Recipes"])
-# app.include_router(ingredient_router.router, tags=["Ingredients"])
+app.include_router(recipe_router.router)
+app.include_router(ingredient_router.router)
 # app.include_router(step_router.router, tags=["Steps"])
 # app.include_router(category_router.router, tags=["Categories"])
 # app.include_router(recipe_to_category_router.router, tags=["Categories"])

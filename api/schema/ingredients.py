@@ -7,7 +7,7 @@ class IngredientRequest(BaseModel):
     Represents the parameters needed to create a new ingredient
     """
 
-    ingredient: str
+    name: str
     quantity: str
 
 
@@ -17,7 +17,7 @@ class IngredientResponse(BaseModel):
     """
 
     id: int
-    ingredient: str
+    name: str
     quantity: str
     recipe_id: int
 

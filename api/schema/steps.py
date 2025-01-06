@@ -8,7 +8,7 @@ class StepRequest(BaseModel):
     """
 
     step_number: int
-    step: str
+    name: str
 
 
 class StepResponse(BaseModel):
@@ -18,7 +18,7 @@ class StepResponse(BaseModel):
 
     id: int
     step_number: int
-    step: str
+    name: str
     recipe_id: int
 
     class Config:

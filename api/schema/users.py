@@ -6,6 +6,8 @@ from pydantic import BaseModel
 from .categories import CategoryResponse
 from .recipes import RecipeResponse
 
+# from typing import List
+
 
 class UserRequest(BaseModel):
     """
@@ -34,26 +36,26 @@ class UserResponse(BaseModel):
     id: int
     name: str
     email: str
-    categories: list
-    recipes: list
+    # categories: List[CategoryResponse]
+    # recipes: List[RecipeResponse]
 
     class Config:
         from_attributes = True
 
-    @classmethod
-    def model_validate(cls, obj):
-        # Override the model_validate method to properly serialize the categories
-        user_dict = super().model_validate(obj).model_dump()
-        # Manually serialize the categories
-        user_dict["categories"] = [
-            CategoryResponse.model_validate(category)
-            for category in obj.categories
-        ]
+    # @classmethod
+    # def model_validate(cls, obj):
+    #     # Override the model_validate method to properly serialize the categories
+    #     user_dict = super().model_validate(obj).model_dump()
+    #     # Manually serialize the categories
+    #     user_dict["categories"] = [
+    #         CategoryResponse.model_validate(category)
+    #         for category in obj.categories
+    #     ]
 
-        user_dict["recipes"] = [
-            RecipeResponse.model_validate(recipe) for recipe in obj.recipes
-        ]
-        return cls(**user_dict)
+    #     user_dict["recipes"] = [
+    #         RecipeResponse.model_validate(recipe) for recipe in obj.recipes
+    #     ]
+    #     return cls(**user_dict)
 
 
 class UserWithPw(BaseModel):
@@ -65,23 +67,23 @@ class UserWithPw(BaseModel):
     name: str
     email: str
     hashed_password: str
-    categories: list
-    recipes: list
+    # categories: List[CategoryResponse]
+    # recipes: List[RecipeResponse]
 
     class Config:
         from_attributes = True
 
-    @classmethod
-    def model_validate(cls, obj):
-        # Override the model_validate method to properly serialize the categories
-        user_dict = super().model_validate(obj).model_dump()
-        # Manually serialize the categories
-        user_dict["categories"] = [
-            CategoryResponse.model_validate(category)
-            for category in obj.categories
-        ]
+    # @classmethod
+    # def model_validate(cls, obj):
+    #     # Override the model_validate method to properly serialize the categories
+    #     user_dict = super().model_validate(obj).model_dump()
+    #     # Manually serialize the categories
+    #     user_dict["categories"] = [
+    #         CategoryResponse.model_validate(category)
+    #         for category in obj.categories
+    #     ]
 
-        user_dict["recipes"] = [
-            RecipeResponse.model_validate(recipe) for recipe in obj.recipes
-        ]
-        return cls(**user_dict)
+    #     user_dict["recipes"] = [
+    #         RecipeResponse.model_validate(recipe) for recipe in obj.recipes
+    #     ]
+    #     return cls(**user_dict)

@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from typing import List
 from datetime import datetime
-
 from .ingredients import IngredientResponse
 from .steps import StepResponse
 
@@ -13,7 +12,7 @@ class RecipeRequest(BaseModel):
 
     name: str
     photo_url: str
-    rating: int
+    # rating: int
 
 
 class RecipeResponse(BaseModel):
@@ -24,11 +23,11 @@ class RecipeResponse(BaseModel):
     id: int
     name: str
     photo_url: str
-    rating: int
+    # rating: int
     created_at: datetime
     user_id: int
-    ingredients: list
-    steps: list
+    ingredients: List[IngredientResponse]
+    steps: List[StepResponse]
 
     class Config:
         from_attributes = True

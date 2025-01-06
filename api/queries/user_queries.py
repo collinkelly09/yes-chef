@@ -69,25 +69,15 @@ class UserQueries:
         """
         try:
             with Session(engine) as session:
-                new_user = User(
+                user = User(
                     name=name, email=email, hashed_password=hashed_password
                 )
-                session.add(new_user)
+                session.add(user)
                 session.commit()
-                user = (
-                    session.query(User)
-                    .where(
-                        User.name == name,
-                        User.email == email,
-                        User.hashed_password == hashed_password,
-                    )
-                    .first()
-                )
                 if not user:
                     raise UserDatabaseException(
                         f"Could not create user with email {email}"
                     )
-                print("made it")
                 converted_user = UserWithPw.model_validate(user)
         except Exception as e:
             print(e)
