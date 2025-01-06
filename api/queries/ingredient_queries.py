@@ -47,7 +47,7 @@ class IngredientQueries:
             )
             result = session.execute(stmt)
             session.commit()
-            return result.rowcount == 1
+            return result.rowcount > 0
 
     def delete_ingredient(self, recipe_id: int, ingredient_id: int) -> bool:
         with Session(engine) as session:

@@ -35,4 +35,11 @@ class StepQueries:
             return result.rowcount > 0
 
     def delete_step(self, recipe_id: int, step_id: int) -> bool:
-        stmt /= 
+        with Session(engine) as session:
+            stmt = delete(Step).where(
+                Step.id == step_id, Step.recipe_id == recipe_id
+            )
+
+            result = session.execute(stmt)
+            session.commit()
+            return result.rowcount > 0

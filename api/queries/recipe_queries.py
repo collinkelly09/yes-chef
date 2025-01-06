@@ -69,7 +69,7 @@ class RecipeQueries:
             result = session.execute(stmt)
             session.commit()
 
-            return result.rowcount == 1
+            return result.rowcount > 0
 
     def delete_recipe(self, recipe_id: int, user_id: int) -> bool:
 
