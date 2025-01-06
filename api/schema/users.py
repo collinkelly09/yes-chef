@@ -15,7 +15,7 @@ class UserRequest(BaseModel):
     """
 
     name: str
-    email: str
+    username: str
     password: str
 
 
@@ -24,7 +24,7 @@ class UserLoginRequest(BaseModel):
     Represents a the parameters needed to log an existing user in
     """
 
-    email: str
+    username: str
     password: str
 
 
@@ -35,7 +35,7 @@ class UserResponse(BaseModel):
 
     id: int
     name: str
-    email: str
+    username: str
     # categories: List[CategoryResponse]
     # recipes: List[RecipeResponse]
 
@@ -65,7 +65,7 @@ class UserWithPw(BaseModel):
 
     id: int
     name: str
-    email: str
+    username: str
     hashed_password: str
     # categories: List[CategoryResponse]
     # recipes: List[RecipeResponse]

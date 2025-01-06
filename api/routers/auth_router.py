@@ -37,7 +37,7 @@ async def signup(
     """
     Creates a new user when someone submits the signup form
     """
-    user_exists = queries.get_by_email(email=new_user.email)
+    user_exists = queries.get_by_username(username=new_user.username)
     if user_exists:
         raise ExistingUserException
 
@@ -47,7 +47,7 @@ async def signup(
     # Create the user in the database
     try:
         user = queries.create_user(
-            new_user.name, new_user.email, hashed_password
+            new_user.name, new_user.username, hashed_password
         )
     except UserDatabaseException as e:
         print(e)
@@ -85,18 +85,18 @@ async def signin(
     """
 
     # Try to get the user from the database
-    user = queries.get_by_email(user_request.email)
+    user = queries.get_by_username(user_request.username)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password",
+            detail="Incorrect username or password",
         )
 
     # Verify the user's password
     if not verify_password(user_request.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password",
+            detail="Incorrect username or password",
         )
 
     # Generate a JWT token

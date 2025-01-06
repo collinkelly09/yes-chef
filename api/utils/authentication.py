@@ -104,7 +104,7 @@ def generate_jwt(user: UserWithPw) -> str:
     )
     jwt_data = JWTPayload(
         exp=exp,
-        sub=user.email,
+        sub=user.username,
         user=JWTUserData(**user.model_dump()),
     )
     encoded_jwt = jwt.encode(

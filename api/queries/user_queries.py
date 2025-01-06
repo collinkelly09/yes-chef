@@ -24,7 +24,7 @@ class UserQueries:
         # Here you can call any of the functions to query the DB
     """
 
-    def get_by_email(self, email: str) -> Optional[UserWithPw]:
+    def get_by_username(self, username: str) -> Optional[UserWithPw]:
         """
         Gets a user from the database by username
 
@@ -32,13 +32,17 @@ class UserQueries:
         """
         try:
             with Session(engine) as session:
-                user = session.query(User).where(User.email == email).first()
+                user = (
+                    session.query(User)
+                    .where(User.username == username)
+                    .first()
+                )
                 if not user:
                     return None
                 converted_user = UserWithPw.model_validate(user)
         except Exception as e:
             print(e)
-            raise UserDatabaseException(f"Error getting user {email}")
+            raise UserDatabaseException(f"Error getting user {username}")
         return converted_user
 
     def get_by_id(self, id: int) -> Optional[UserWithPw]:
@@ -60,7 +64,7 @@ class UserQueries:
         return converted_user
 
     def create_user(
-        self, name: str, email: str, hashed_password: str
+        self, name: str, username: str, hashed_password: str
     ) -> UserWithPw:
         """
         Creates a new user in the database
@@ -70,18 +74,20 @@ class UserQueries:
         try:
             with Session(engine) as session:
                 user = User(
-                    name=name, email=email, hashed_password=hashed_password
+                    name=name,
+                    username=username,
+                    hashed_password=hashed_password,
                 )
                 session.add(user)
                 session.commit()
                 if not user:
                     raise UserDatabaseException(
-                        f"Could not create user with email {email}"
+                        f"Could not create user with username {username}"
                     )
                 converted_user = UserWithPw.model_validate(user)
         except Exception as e:
             print(e)
             raise UserDatabaseException(
-                f"Could not create user with email {email}"
+                f"Could not create user with username {username}"
             )
         return converted_user
