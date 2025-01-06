@@ -30,7 +30,9 @@ class StepQueries:
                 .where(Step.id == step_id, Step.recipe_id == recipe_id)
                 .values(name=step_in.name, step_number=step_in.step_number)
             )
-            session.execute()
+            result = session.execute(stmt)
+            session.commit()
+            return result.rowcount > 0
 
     def delete_step(self, recipe_id: int, step_id: int) -> bool:
-        pass
+        stmt /= 
