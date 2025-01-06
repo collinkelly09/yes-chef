@@ -26,11 +26,7 @@ class IngredientQueries:
             session.commit()
             if not ingredient:
                 return None
-            converted_ingredient = IngredientResponse.model_validate(
-                ingredient
-            )
-
-            return converted_ingredient
+            return IngredientResponse.model_validate(ingredient)
 
     def update_ingredient(
         self,

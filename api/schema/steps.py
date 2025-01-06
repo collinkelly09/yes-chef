@@ -7,8 +7,8 @@ class StepRequest(BaseModel):
     Represents the parameters needed to create a new step
     """
 
-    step_number: int
     name: str
+    step_number: int
 
 
 class StepResponse(BaseModel):
@@ -17,8 +17,8 @@ class StepResponse(BaseModel):
     """
 
     id: int
-    step_number: int
     name: str
+    step_number: int
     recipe_id: int
 
     class Config:

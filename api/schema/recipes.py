@@ -48,9 +48,25 @@ class RecipeResponse(BaseModel):
         return cls(**recipe_dict)
 
 
+class RecipeListResponse(BaseModel):
+    """
+    Represents a recipe
+    """
+
+    id: int
+    name: str
+    photo_url: str
+    # rating: int
+    created_at: datetime
+    user_id: int
+
+    class Config:
+        from_attributes = True
+
+
 class RecipeList(BaseModel):
     """
     Represents a list of recipes
     """
 
-    recipes: List[RecipeResponse]
+    recipes: List[RecipeListResponse]

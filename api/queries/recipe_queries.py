@@ -3,7 +3,12 @@ Database Queries for Recipes
 """
 
 from utils.exceptions import RecipeNotCreatedException
-from schema.recipes import RecipeRequest, RecipeResponse, RecipeList
+from schema.recipes import (
+    RecipeListResponse,
+    RecipeRequest,
+    RecipeResponse,
+    RecipeList,
+)
 from db.models import Recipe, engine
 from sqlalchemy.orm import Session
 from sqlalchemy import delete, update
@@ -34,7 +39,7 @@ class RecipeQueries:
                 session.query(Recipe).where(Recipe.user_id == user_id).all()
             )
             converted = [
-                RecipeResponse.model_validate(recipe) for recipe in recipes
+                RecipeListResponse.model_validate(recipe) for recipe in recipes
             ]
 
             return {"recipes": converted}
@@ -49,8 +54,7 @@ class RecipeQueries:
             if recipe is None:
                 return None
 
-            converted_recipe = RecipeResponse.model_validate(recipe)
-            return converted_recipe
+            return RecipeResponse.model_validate(recipe)
 
     def update_recipe(
         self, recipe_id: int, recipe_in: RecipeRequest, user_id: int
