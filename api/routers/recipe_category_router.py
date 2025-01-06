@@ -114,57 +114,57 @@ def get_category_recipes(
     )
 
 
-# @router.delete(
-#     "/categories/{category_id}/recipes/{recipe_id}", status_code=204
-# )
-# def remove_recipe_from_category(
-#     category_id: int,
-#     recipe_id: int,
-#     user: UserResponse = Depends(try_get_jwt_user_data),
-#     recipe_queries: RecipeQueries = Depends(),
-#     category_queries: CategoryQueries = Depends(),
-#     recipe_to_category_queries: RecipeToCategoryQueries = Depends(),
-# ):
-#     """
-#     Removes a recipe from a category.
+@router.delete(
+    "/categories/{category_id}/recipes/{recipe_id}", status_code=204
+)
+def remove_recipe_from_category(
+    category_id: int,
+    recipe_id: int,
+    user: UserResponse = Depends(try_get_jwt_user_data),
+    recipe_queries: RecipeQueries = Depends(),
+    category_queries: CategoryQueries = Depends(),
+    recipe_to_category_queries: RecipeToCategoryQueries = Depends(),
+):
+    """
+    Removes a recipe from a category.
 
-#     Parameters:
-#     - category_id (int): The ID of the category to remove the recipe from.
-#     - recipe_id (int): The ID of the recipe to remove from the category.
-#     - user (UserResponse): The user making the request. Defaults to the
-#         result of the try_get_jwt_user_data function.
-#     - recipe_queries (RecipeQueries): The queries object for interacting
-#         with the recipe data. Defaults to an instance of RecipeQueries.
-#     - category_queries (CategoryQueries): The queries object for interacting
-#         with the category data. Defaults to an instance of CategoryQueries.
-#     - recipe_to_category_queries (RecipeToCategoryQueries): The queries object
-#         for interacting with the recipe-to-category data. Defaults to an
-#         instance of RecipeToCategoryQueries.
+    Parameters:
+    - category_id (int): The ID of the category to remove the recipe from.
+    - recipe_id (int): The ID of the recipe to remove from the category.
+    - user (UserResponse): The user making the request. Defaults to the
+        result of the try_get_jwt_user_data function.
+    - recipe_queries (RecipeQueries): The queries object for interacting
+        with the recipe data. Defaults to an instance of RecipeQueries.
+    - category_queries (CategoryQueries): The queries object for interacting
+        with the category data. Defaults to an instance of CategoryQueries.
+    - recipe_to_category_queries (RecipeToCategoryQueries): The queries object
+        for interacting with the recipe-to-category data. Defaults to an
+        instance of RecipeToCategoryQueries.
 
-#     Raises:
-#     - UserException: If the user is not authenticated.
-#     - RecipeNotFoundException: If the recipe is not found.
-#     - CategoryNotFoundException: If the category is not found.
-#     - NotInCategoryException: If the recipe is not in the category.
+    Raises:
+    - UserException: If the user is not authenticated.
+    - RecipeNotFoundException: If the recipe is not found.
+    - CategoryNotFoundException: If the category is not found.
+    - NotInCategoryException: If the recipe is not in the category.
 
-#     Returns:
-#     - 204 No Content: If the recipe is successfully removed from the category.
-#     """
-#     if user is None:
-#         raise UserException
-#     recipe = recipe_queries.get_recipe(recipe_id=recipe_id, user_id=user.id)
-#     if recipe is None:
-#         raise RecipeNotFoundException
-#     category = category_queries.get_category(
-#         category_id=category_id, user_id=user.id
-#     )
-#     if category is None:
-#         raise CategoryNotFoundException
-#     in_category = recipe_to_category_queries.is_in_category(
-#         recipe_id=recipe_id, category_id=category_id
-#     )
-#     if not in_category:
-#         raise NotInCategoryException
-#     recipe_to_category_queries.remove_recipe(
-#         category_id=category_id, recipe_id=recipe_id, user_id=user.id
-#     )
+    Returns:
+    - 204 No Content: If the recipe is successfully removed from the category.
+    """
+    if user is None:
+        raise UserException
+    recipe = recipe_queries.get_recipe(recipe_id=recipe_id, user_id=user.id)
+    if recipe is None:
+        raise RecipeNotFoundException
+    category = category_queries.get_category(
+        category_id=category_id, user_id=user.id
+    )
+    if category is None:
+        raise CategoryNotFoundException
+    in_category = recipe_to_category_queries.is_in_category(
+        recipe_id=recipe_id, category_id=category_id
+    )
+    if not in_category:
+        raise NotInCategoryException
+    recipe_to_category_queries.remove_recipe(
+        category_id=category_id, recipe_id=recipe_id
+    )

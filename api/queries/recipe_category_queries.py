@@ -34,13 +34,19 @@ class RecipeToCategoryQueries:
     ) -> RecipeList:
         with Session(engine) as session:
             stmt = (
-                select(Recipe)
-                .join(RecipeCategory, Recipe.id == RecipeCategory.recipe_id)
-                .join(Category, Category.id == RecipeCategory.category_id)
-            ).filter(
-                Category.id == category_id,
-                Category.user_id == user_id,
-                Recipe.user_id == user_id,
+                (
+                    select(Recipe)
+                    .join(
+                        RecipeCategory, Recipe.id == RecipeCategory.recipe_id
+                    )
+                    .join(Category, Category.id == RecipeCategory.category_id)
+                )
+                .filter(
+                    Category.id == category_id,
+                    Category.user_id == user_id,
+                    Recipe.user_id == user_id,
+                )
+                .order_by(Recipe.created_at.desc())
             )
 
             recipes = session.execute(stmt).scalars().all()
@@ -50,37 +56,14 @@ class RecipeToCategoryQueries:
             ]
             return {"recipes": converted_recipes}
 
-    # with pool.connection() as conn:
-    #     with conn.cursor(row_factory=class_row(RecipeResponse)) as cur:
-    #         cur.execute(
-    #             """
-    #             SELECT r.*
-    #             FROM recipes AS r
-    #             JOIN recipe_to_categories AS rtc ON r.id = rtc.recipe_id
-    #             JOIN categories AS c ON rtc.category_id = c.id
-    #             WHERE c.id = %s
-    #                 AND c.user_id = %s
-    #                 AND r.user_id = %s
-    #                 AND rtc.user_id = %s
-    #             ORDER BY r.created_at DESC;
-    #             """,
-    #             [category_id, user_id, user_id, user_id],
-    #         )
-    #         return RecipeList(recipes=cur.fetchall())
+    def remove_recipe(self, category_id: int, recipe_id: int) -> bool:
+        with Session(engine) as session:
+            stmt = delete(RecipeCategory).where(
+                RecipeCategory.category_id == category_id,
+                RecipeCategory.recipe_id == recipe_id,
+            )
 
+            result = session.execute(stmt)
+            session.commit()
 
-#     def remove_recipe(
-#         self, category_id: int, recipe_id: int, user_id: int
-#     ) -> bool:
-#         with pool.connection() as conn:
-#             with conn.cursor() as cur:
-#                 cur.execute(
-#                     """
-#                     DELETE FROM recipe_to_categories
-#                     WHERE category_id = %s
-#                         AND recipe_id = %s
-#                         AND user_id = %s
-#                     """,
-#                     [category_id, recipe_id, user_id],
-#                 )
-#                 return cur.rowcount > 0
+            return result.rowcount > 0
