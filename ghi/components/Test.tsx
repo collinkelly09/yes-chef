@@ -13,12 +13,9 @@ import { useGetUserQuery, useListAllRecipesQuery } from "../redux/apiSlice";
 // }
 
 const Test = () => {
-  // const [recipes, setData] = useState<Recipe[]>([]);
-  // const apiUrl: string = process.env.EXPO_PUBLIC_API_URL;
-
   const { data: recipeData, isLoading: recipeLoading } =
     useListAllRecipesQuery();
-  // const { data, isLoading } = useGetUserQuery();
+  const { data: userData, isLoading } = useGetUserQuery();
 
   const getData = async () => {
     if (!recipeLoading && recipeData) {
