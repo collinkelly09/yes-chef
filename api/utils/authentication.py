@@ -14,7 +14,7 @@ from schema.jwt import JWTPayload, JWTUserData
 
 from queries.user_queries import UserWithPw
 
-# If you ever need to change the hashing algorithm, you can change it here
+
 ALGORITHM = ALGORITHMS.HS256
 
 # We pull this from the environment
@@ -63,6 +63,7 @@ async def try_get_jwt_user_data(
 
     # If there's no cookie at all, return None
     if not fast_api_token:
+        print("********************************************")
         return
     # If the payload doesn't exist, return None
     payload = await decode_jwt(fast_api_token)

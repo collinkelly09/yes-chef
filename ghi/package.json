@@ -1,7 +1,7 @@
 {
   "name": "ghi",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "index.tsx",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -9,11 +9,14 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~52.0.23",
-    "expo-auth-session": "^6.0.1",
-    "expo-status-bar": "~2.0.0",
+    "@reduxjs/toolkit": "^2.5.0",
+    "expo": "~52.0.26",
+    "expo-auth-session": "~6.0.2",
+    "expo-status-bar": "~2.0.1",
     "react": "18.3.1",
-    "react-native": "0.76.5"
+    "react-native": "0.76.6",
+    "react-redux": "^9.2.0",
+    "redux": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

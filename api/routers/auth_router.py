@@ -22,8 +22,6 @@ from utils.authentication import (
     verify_password,
 )
 
-# Note we are using a prefix here,
-# This saves us typing in all the routes below
 router = APIRouter(tags=["Authentication"], prefix="/api/auth")
 
 
