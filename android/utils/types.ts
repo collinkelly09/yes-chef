@@ -1,3 +1,11 @@
+import { z } from "zod";
+import {
+  categorySchema,
+  ingredientSchema,
+  recipeSchema,
+  stepSchema,
+} from "./validationSchema";
+
 // Auth Types
 export interface SignUpRequest {
   name: string;
@@ -17,10 +25,7 @@ export interface UserResponse {
 }
 
 // Recipe Types
-export interface RecipeRequest {
-  name: string;
-  photo_url: string;
-}
+export type RecipeRequest = z.infer<typeof recipeSchema>;
 
 export interface RecipeResponse {
   id: number;
@@ -44,10 +49,7 @@ export interface RecipeListResponse {
 [];
 
 // Ingredient Types
-export interface IngredientRequest {
-  name: string;
-  quantity: string;
-}
+export type IngredientRequest = z.infer<typeof ingredientSchema>;
 
 export interface IngredientResponse {
   id: number;
@@ -57,16 +59,27 @@ export interface IngredientResponse {
 }
 
 // Step Types
-export interface StepRequest {
-  name: string;
-  step_number: number;
-}
+export type StepRequest = z.infer<typeof stepSchema>;
 
 export interface StepResponse {
   id: number;
   name: string;
   step_number: number;
   recipe_id: number;
+}
+
+// Category Types
+export type CategoryRequest = z.infer<typeof categorySchema>;
+
+export interface CategoryResponse {
+  id: number;
+  name: string;
+  recipes?: RecipeListResponse;
+}
+
+export interface CategoryListResponse {
+  id: number;
+  name: string;
 }
 
 //* Other Types

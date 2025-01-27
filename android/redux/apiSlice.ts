@@ -194,6 +194,8 @@ export const recipeApi = createApi({
       }),
       invalidatesTags: [{ type: "Recipes", id: "ONE" }],
     }),
+
+    // Category Queries and Mutations
   }),
 });
 
@@ -210,4 +212,7 @@ export const {
   useCreateIngredientMutation,
   useUpdateIngredientMutation,
   useDeleteIngredientMutation,
+  useCreateStepMutation,
+  useUpdateStepMutation,
+  useDeleteStepMutation
 } = recipeApi;

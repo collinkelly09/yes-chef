@@ -27,5 +27,13 @@ class CategoryResponse(BaseModel):
         return cls(**category_dict)
 
 
+class CategoryListResponse(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        from_attributes = True
+
+
 class CategoryList(BaseModel):
-    categories: List[CategoryResponse]
+    categories: List[CategoryListResponse]
