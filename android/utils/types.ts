@@ -57,6 +57,11 @@ export interface IngredientResponse {
 }
 
 // Step Types
+export interface StepRequest {
+  name: string;
+  step_number: number;
+}
+
 export interface StepResponse {
   id: number;
   name: string;
@@ -64,13 +69,14 @@ export interface StepResponse {
   recipe_id: number;
 }
 
+//* Other Types
+
 // Error
 export interface ErrorResponse {
   detail: string;
 }
 
-//* Root Stack Param Type
-
+// Root Stack Param
 export type RootStackParamList = {
   Signin: undefined;
   Signup: undefined;

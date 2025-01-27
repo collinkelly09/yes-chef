@@ -9,6 +9,8 @@ import {
   RecipeRequest,
   IngredientResponse,
   IngredientRequest,
+  StepResponse,
+  StepRequest,
 } from "../utils/types";
 
 const EXPO_PUBLIC_API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -24,7 +26,8 @@ export const recipeApi = createApi({
     baseUrl: EXPO_PUBLIC_API_URL,
     credentials: "include",
   }),
-  endpoints: (builder) => ({
+  endpoints: (builder) => ({]
+    // Auth Queries and Mutations
     getUser: builder.query<UserResponse | null, void>({
       query: () => ({
         url: "/api/auth/authenticate",
@@ -58,6 +61,7 @@ export const recipeApi = createApi({
       invalidatesTags: ["User"],
     }),
 
+    // Recipe Queries and Mutations
     getRecipeDetails: builder.query<
       RecipeResponse | ErrorResponse,
       { recipeId: number }
@@ -119,6 +123,7 @@ export const recipeApi = createApi({
       ],
     }),
 
+    // Ingredient Mutations
     createIngredient: builder.mutation<
       IngredientResponse | ErrorResponse,
       { recipeId: number; body: IngredientRequest }
@@ -153,6 +158,42 @@ export const recipeApi = createApi({
       }),
       invalidatesTags: [{ type: "Recipes", id: "ONE" }],
     }),
+
+    // Step Mutations
+    createStep: builder.mutation<
+      StepResponse,
+      { recipeId: number; body: StepRequest }
+    >({
+      query: ({ recipeId, body }) => ({
+        url: `/recipes/${recipeId}/steps`,
+        body,
+        method: "POST",
+      }),
+      invalidatesTags: [{ type: "Recipes", id: "ONE" }],
+    }),
+
+    updateStep: builder.mutation<
+      null | ErrorResponse,
+      { recipeId: number; stepId: number; body: StepRequest }
+    >({
+      query: ({ recipeId, stepId, body }) => ({
+        url: `/recipes/${recipeId}/steps/${stepId}`,
+        body,
+        method: "PATCH",
+      }),
+      invalidatesTags: [{ type: "Recipes", id: "ONE" }],
+    }),
+
+    deleteStep: builder.mutation<
+      null | ErrorResponse,
+      { recipeId: number; stepId: number }
+    >({
+      query: ({ recipeId, stepId }) => ({
+        url: `/recipes/${recipeId}/steps/${stepId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Recipes", id: "ONE" }],
+    }),
   }),
 });
 
@@ -167,4 +208,6 @@ export const {
   useUpdateRecipeMutation,
   useDeleteRecipeMutation,
   useCreateIngredientMutation,
+  useUpdateIngredientMutation,
+  useDeleteIngredientMutation,
 } = recipeApi;
