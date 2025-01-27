@@ -77,9 +77,8 @@ export interface CategoryResponse {
   recipes?: RecipeListResponse;
 }
 
-export interface CategoryListResponse {
-  id: number;
-  name: string;
+export interface CategoryResponseList {
+  categories: CategoryResponse[];
 }
 
 //* Other Types

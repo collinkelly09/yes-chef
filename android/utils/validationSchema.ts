@@ -19,7 +19,10 @@ export const SignUpSchema = z
       .string()
       .regex(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-_])[A-Za-z\d@$!%*?&-_]+$/,
-        "Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character"
+        {
+          message:
+            "Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character",
+        }
       ),
     confirmPassword: z.string().min(1, "Please confirm password"),
   })

@@ -19,7 +19,7 @@ router = APIRouter(tags=["Categories"], prefix="/api")
 
 @router.post(
     "/categories/{category_id}/recipes/",
-    response_model=CategoryRecipeResponse,
+    status_code=204,
 )
 def add_recipe_to_category(
     recipe_id: int,
@@ -69,48 +69,8 @@ def add_recipe_to_category(
     )
     if in_category:
         raise AlreadyInCategoryException
-    return recipe_to_category_queries.add_to_category(
+    recipe_to_category_queries.add_to_category(
         recipe_id=recipe_id, category_id=category_id
-    )
-
-
-@router.get("/categories/{category_id}/recipes/", response_model=RecipeList)
-def get_category_recipes(
-    category_id: int,
-    user: UserResponse = Depends(try_get_jwt_user_data),
-    category_queries: CategoryQueries = Depends(),
-    recipe_to_category_queries: RecipeToCategoryQueries = Depends(),
-):
-    """
-    Retrieves recipes in a given category.
-
-    Parameters:
-    - category_id (int): The ID of the category to retrieve recipes for.
-    - user (UserResponse): The user making the request. Defaults to the
-        result of the try_get_jwt_user_data function.
-    - category_queries (CategoryQueries):  The queries object
-        for interacting with the category data. Defaults to an
-        instance of CategoryQueries.
-    - recipe_to_category_queries (RecipeToCategoryQueries): The queries object
-        for interacting with the recipe-to-categories data. Defaults to an
-        instance of RecipeToCategoryQueries.
-
-    Raises:
-    - UserException: If the user is not authenticated.
-    - CategoryNotFoundException: If the category is not found.
-
-    Returns:
-    - RecipeList[RecipeOut]: The list of recipes in the category.
-    """
-    if user is None:
-        raise UserException
-    category = category_queries.get_category(
-        category_id=category_id, user_id=user.id
-    )
-    if category is None:
-        raise CategoryNotFoundException
-    return recipe_to_category_queries.get_category_recipes(
-        category_id=category_id, user_id=user.id
     )
 
 

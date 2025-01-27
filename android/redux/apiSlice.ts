@@ -11,6 +11,9 @@ import {
   IngredientRequest,
   StepResponse,
   StepRequest,
+  CategoryResponse,
+  CategoryRequest,
+  CategoryResponseList,
 } from "../utils/types";
 
 const EXPO_PUBLIC_API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -20,13 +23,13 @@ if (!EXPO_PUBLIC_API_URL) {
 }
 
 export const recipeApi = createApi({
-  tagTypes: ["User", "Recipes"],
+  tagTypes: ["User", "Recipes", "Categories"],
   reducerPath: "recipeApi",
   baseQuery: fetchBaseQuery({
     baseUrl: EXPO_PUBLIC_API_URL,
     credentials: "include",
   }),
-  endpoints: (builder) => ({]
+  endpoints: (builder) => ({
     // Auth Queries and Mutations
     getUser: builder.query<UserResponse | null, void>({
       query: () => ({
@@ -72,7 +75,7 @@ export const recipeApi = createApi({
       providesTags: [{ type: "Recipes", id: "ONE" }],
     }),
 
-    listAllRecipes: builder.query<RecipeListResponse | ErrorResponse, void>({
+    listRecipes: builder.query<RecipeListResponse | ErrorResponse, void>({
       query: () => ({
         url: "/api/recipes",
       }),
@@ -88,11 +91,7 @@ export const recipeApi = createApi({
         body,
         method: "POST",
       }),
-      invalidatesTags: [
-        { type: "Recipes", id: "ONE" },
-        { type: "Recipes", id: "ALL" },
-        { type: "Recipes", id: "CATEGORY" },
-      ],
+      invalidatesTags: [{ type: "Recipes", id: "ALL" }],
     }),
 
     updateRecipe: builder.mutation<
@@ -107,7 +106,7 @@ export const recipeApi = createApi({
       invalidatesTags: [
         { type: "Recipes", id: "ONE" },
         { type: "Recipes", id: "ALL" },
-        { type: "Recipes", id: "CATEGORY" },
+        { type: "Categories", id: "ONE" },
       ],
     }),
 
@@ -117,9 +116,8 @@ export const recipeApi = createApi({
         method: "DELETE",
       }),
       invalidatesTags: [
-        { type: "Recipes", id: "ONE" },
         { type: "Recipes", id: "ALL" },
-        { type: "Recipes", id: "CATEGORY" },
+        { type: "Categories", id: "ONE" },
       ],
     }),
 
@@ -129,7 +127,7 @@ export const recipeApi = createApi({
       { recipeId: number; body: IngredientRequest }
     >({
       query: ({ recipeId, body }) => ({
-        url: `/recipes/${recipeId}/ingredients`,
+        url: `/api/recipes/${recipeId}/ingredients`,
         body,
         method: "POST",
       }),
@@ -141,7 +139,7 @@ export const recipeApi = createApi({
       { recipeId: number; ingredientId: number; body: IngredientRequest }
     >({
       query: ({ recipeId, ingredientId, body }) => ({
-        url: `/recipes/${recipeId}/ingredients/${ingredientId}`,
+        url: `/api/recipes/${recipeId}/ingredients/${ingredientId}`,
         body,
         method: "PATCH",
       }),
@@ -153,7 +151,7 @@ export const recipeApi = createApi({
       { recipeId: number; ingredientId: number }
     >({
       query: ({ recipeId, ingredientId }) => ({
-        url: `/recipes/${recipeId}/ingredients/${ingredientId}`,
+        url: `/api/recipes/${recipeId}/ingredients/${ingredientId}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Recipes", id: "ONE" }],
@@ -165,7 +163,7 @@ export const recipeApi = createApi({
       { recipeId: number; body: StepRequest }
     >({
       query: ({ recipeId, body }) => ({
-        url: `/recipes/${recipeId}/steps`,
+        url: `/api/recipes/${recipeId}/steps`,
         body,
         method: "POST",
       }),
@@ -177,7 +175,7 @@ export const recipeApi = createApi({
       { recipeId: number; stepId: number; body: StepRequest }
     >({
       query: ({ recipeId, stepId, body }) => ({
-        url: `/recipes/${recipeId}/steps/${stepId}`,
+        url: `/api/recipes/${recipeId}/steps/${stepId}`,
         body,
         method: "PATCH",
       }),
@@ -189,13 +187,89 @@ export const recipeApi = createApi({
       { recipeId: number; stepId: number }
     >({
       query: ({ recipeId, stepId }) => ({
-        url: `/recipes/${recipeId}/steps/${stepId}`,
+        url: `/api/recipes/${recipeId}/steps/${stepId}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Recipes", id: "ONE" }],
     }),
 
     // Category Queries and Mutations
+    listCategories: builder.query<CategoryResponseList | ErrorResponse, void>({
+      query: () => ({
+        url: "/api/categories",
+      }),
+      providesTags: [{ type: "Categories", id: "ALL" }],
+    }),
+
+    getCategoryDetails: builder.query<
+      CategoryResponse | ErrorResponse,
+      { categoryId: number }
+    >({
+      query: (categoryId) => ({
+        url: `/api/categories/${categoryId}`,
+      }),
+      providesTags: [{ type: "Categories", id: "ONE" }],
+    }),
+
+    createCategory: builder.mutation<
+      CategoryResponse | ErrorResponse,
+      CategoryRequest
+    >({
+      query: (body) => ({
+        url: "/api/categories",
+        body,
+        method: "POST",
+      }),
+      invalidatesTags: [{ type: "Categories", id: "ALL" }],
+    }),
+
+    updateCategory: builder.mutation<
+      null | ErrorResponse,
+      { categoryId: number; body: CategoryRequest }
+    >({
+      query: ({ categoryId, body }) => ({
+        url: `/api/categories/${categoryId}`,
+        body,
+        method: "PATCH",
+      }),
+      invalidatesTags: [
+        { type: "Categories", id: "ONE" },
+        { type: "Categories", id: "ALL" },
+      ],
+    }),
+
+    deleteCategory: builder.mutation<
+      null | ErrorResponse,
+      { categoryId: number }
+    >({
+      query: (categoryId) => ({
+        url: `/api/categories/${categoryId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Categories", id: "ALL" }],
+    }),
+
+    addRecipeToCategory: builder.mutation<
+      null | ErrorResponse,
+      { categoryId: number; recipeId: number }
+    >({
+      query: ({ categoryId, recipeId }) => ({
+        url: `/api/categories/${categoryId}/recipes/${recipeId}`,
+        method: "POST",
+      }),
+      invalidatesTags: [{ type: "Categories", id: "ONE" }],
+    }),
+
+    removeRecipeFromCategory: builder.mutation<
+      null | ErrorResponse,
+      { categoryId: number; recipeId: number }
+    >({
+      query: ({ categoryId, recipeId }) => ({
+        url: `/api/categories/${categoryId}/recipes/${recipeId}`,
+        method: "POST",
+      }),
+      invalidatesTags: [{ type: "Categories", id: "ONE" }],
+    }),
   }),
 });
 
@@ -206,7 +280,7 @@ export const {
   useSignoutMutation,
   useCreateRecipeMutation,
   useGetRecipeDetailsQuery,
-  useListAllRecipesQuery,
+  useListRecipesQuery,
   useUpdateRecipeMutation,
   useDeleteRecipeMutation,
   useCreateIngredientMutation,
@@ -214,5 +288,11 @@ export const {
   useDeleteIngredientMutation,
   useCreateStepMutation,
   useUpdateStepMutation,
-  useDeleteStepMutation
+  useDeleteStepMutation,
+  useListCategoriesQuery,
+  useGetCategoryDetailsQuery,
+  useCreateCategoryMutation,
+  useUpdateCategoryMutation,
+  useDeleteCategoryMutation,
+  useAddRecipeToCategoryMutation,
 } = recipeApi;
