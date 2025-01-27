@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { useSigninMutation } from "../redux/apiSlice";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import globalStyles from "../styles";
+import { RootStackParamList } from "../utils/types";
 
-const SignInScreen = () => {
+type SigninScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Signin"
+>;
+
+type Props = { navigation: SigninScreenNavigationProp };
+
+const SignInScreen = ({ navigation }: Props) => {
   const [signin, signinStatus] = useSigninMutation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +28,8 @@ const SignInScreen = () => {
 
       await signin(credentials).unwrap();
 
-      Alert.alert("Success", "You are logged in!");
+      // Alert.alert("Success", "You are logged in!");
+      navigation.navigate("Home");
     } catch (err) {
       if (err instanceof Error) {
         Alert.alert("Error", err.message);
@@ -29,7 +40,7 @@ const SignInScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, globalStyles.container]}>
       <Text style={styles.heading}>Sign In</Text>
 
       <View style={styles.inputContainer}>
@@ -66,6 +77,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
     padding: 16,
   },
   heading: {
@@ -78,7 +90,9 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   input: {
+    backgroundColor: "white",
     height: 40,
+    width: 150,
     borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 4,

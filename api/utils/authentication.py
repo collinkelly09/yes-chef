@@ -63,7 +63,6 @@ async def try_get_jwt_user_data(
 
     # If there's no cookie at all, return None
     if not fast_api_token:
-        print("********************************************")
         return
     # If the payload doesn't exist, return None
     payload = await decode_jwt(fast_api_token)
