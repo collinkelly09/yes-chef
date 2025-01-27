@@ -50,7 +50,7 @@ export const recipeApi = createApi({
       invalidatesTags: ["User"],
     }),
 
-    signout: builder.mutation<null, void>({
+    signout: builder.mutation<null | ErrorResponse, void>({
       query: () => ({
         url: "api/auth/signout",
         method: "DELETE",
@@ -58,14 +58,17 @@ export const recipeApi = createApi({
       invalidatesTags: ["User"],
     }),
 
-    getRecipeDetails: builder.query<RecipeResponse, { recipeId: number }>({
+    getRecipeDetails: builder.query<
+      RecipeResponse | ErrorResponse,
+      { recipeId: number }
+    >({
       query: ({ recipeId }) => ({
         url: `/api/recipes/${recipeId}`,
       }),
       providesTags: [{ type: "Recipes", id: "ONE" }],
     }),
 
-    listAllRecipes: builder.query<RecipeListResponse, void>({
+    listAllRecipes: builder.query<RecipeListResponse | ErrorResponse, void>({
       query: () => ({
         url: "/api/recipes",
       }),
@@ -89,7 +92,7 @@ export const recipeApi = createApi({
     }),
 
     updateRecipe: builder.mutation<
-      null,
+      null | ErrorResponse,
       { recipeId: number; body: RecipeRequest }
     >({
       query: ({ recipeId, body }) => ({
@@ -104,7 +107,7 @@ export const recipeApi = createApi({
       ],
     }),
 
-    deleteRecipe: builder.mutation<null, { recipeId: number }>({
+    deleteRecipe: builder.mutation<null | ErrorResponse, { recipeId: number }>({
       query: ({ recipeId }) => ({
         url: `/api/recipes/${recipeId}`,
         method: "DELETE",
@@ -115,12 +118,40 @@ export const recipeApi = createApi({
         { type: "Recipes", id: "CATEGORY" },
       ],
     }),
-    createIngredient: builder.mutation<IngredientResponse, IngredientRequest>({
-      query: (body) => ({
-        url: "",
+
+    createIngredient: builder.mutation<
+      IngredientResponse | ErrorResponse,
+      { recipeId: number; body: IngredientRequest }
+    >({
+      query: ({ recipeId, body }) => ({
+        url: `/recipes/${recipeId}/ingredients`,
         body,
         method: "POST",
       }),
+      invalidatesTags: [{ type: "Recipes", id: "ONE" }],
+    }),
+
+    updateIngredient: builder.mutation<
+      null | ErrorResponse,
+      { recipeId: number; ingredientId: number; body: IngredientRequest }
+    >({
+      query: ({ recipeId, ingredientId, body }) => ({
+        url: `/recipes/${recipeId}/ingredients/${ingredientId}`,
+        body,
+        method: "PATCH",
+      }),
+      invalidatesTags: [{ type: "Recipes", id: "ONE" }],
+    }),
+
+    deleteIngredient: builder.mutation<
+      null | ErrorResponse,
+      { recipeId: number; ingredientId: number }
+    >({
+      query: ({ recipeId, ingredientId }) => ({
+        url: `/recipes/${recipeId}/ingredients/${ingredientId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Recipes", id: "ONE" }],
     }),
   }),
 });
@@ -135,4 +166,5 @@ export const {
   useListAllRecipesQuery,
   useUpdateRecipeMutation,
   useDeleteRecipeMutation,
+  useCreateIngredientMutation,
 } = recipeApi;
