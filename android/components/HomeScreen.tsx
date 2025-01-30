@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Text, TouchableOpacity, View, StyleSheet, Button } from "react-native";
 import {
   useGetUserQuery,
-  useListAllRecipesQuery,
+  useListRecipesQuery,
   useSignoutMutation,
 } from "../redux/apiSlice";
 import { RootStackParamList } from "../utils/types";
