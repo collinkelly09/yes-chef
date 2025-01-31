@@ -6,10 +6,13 @@ const globalStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 16,
-    backgroundColor: "#750573",
+    backgroundColor: "#FFFFFF",
   },
   text: {
-    color: "white",
+    color: "#000000",
+    fontStyle: "italic",
+    fontWeight: "bold",
+    fontFamily: "",
   },
 });
 

@@ -41,10 +41,10 @@ const SignInScreen = ({ navigation }: Props) => {
 
   return (
     <View style={[styles.container, globalStyles.container]}>
-      <Text style={styles.heading}>Sign In</Text>
+      <Text style={[globalStyles.text, styles.heading]}>Sign In</Text>
 
       <View style={styles.inputContainer}>
-        <Text>Username</Text>
+        <Text style={globalStyles.text}>Username</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter your username"
@@ -54,7 +54,7 @@ const SignInScreen = ({ navigation }: Props) => {
       </View>
 
       <View style={styles.inputContainer}>
-        <Text>Password</Text>
+        <Text style={globalStyles.text}>Password</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter your password"
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 24,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     textAlign: "center",
     marginBottom: 32,
   },
