@@ -90,6 +90,7 @@ export interface ErrorResponse {
 
 // Root Stack Param
 export type RootStackParamList = {
+  Welcome: undefined;
   Signin: undefined;
   Signup: undefined;
   Home: undefined;

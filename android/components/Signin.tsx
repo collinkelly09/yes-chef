@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { useSigninMutation } from "../redux/apiSlice";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import globalStyles from "../styles";
+import { theme } from "../theme";
 import { RootStackParamList } from "../utils/types";
+import { useFonts } from "expo-font";
 
 type SigninScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -16,6 +17,14 @@ const SignInScreen = ({ navigation }: Props) => {
   const [signin, signinStatus] = useSigninMutation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const [fontsLoaded] = useFonts({
+    "InriaSerif-BoldItalic": require("../assets/fonts/InriaSerif-BoldItalic.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return undefined;
+  }
 
   const handleSignIn = async () => {
     if (!username || !password) {
@@ -40,11 +49,11 @@ const SignInScreen = ({ navigation }: Props) => {
   };
 
   return (
-    <View style={[styles.container, globalStyles.container]}>
-      <Text style={[globalStyles.text, styles.heading]}>Sign In</Text>
+    <View style={styles.container}>
+      <Text style={styles.heading}>Sign In</Text>
 
       <View style={styles.inputContainer}>
-        <Text style={globalStyles.text}>Username</Text>
+        <Text style={styles.text}>Username</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter your username"
@@ -54,7 +63,7 @@ const SignInScreen = ({ navigation }: Props) => {
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={globalStyles.text}>Password</Text>
+        <Text style={styles.text}>Password</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter your password"
@@ -79,10 +88,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 16,
+    backgroundColor: theme.colorWhite,
   },
   heading: {
     fontSize: 24,
-    // fontWeight: "bold",
     textAlign: "center",
     marginBottom: 32,
   },
@@ -90,13 +99,19 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   input: {
-    backgroundColor: "white",
+    backgroundColor: theme.colorWhite,
     height: 40,
     width: 150,
-    borderColor: "#ccc",
+    borderColor: theme.colorBlack,
     borderWidth: 1,
     borderRadius: 4,
     paddingLeft: 8,
+  },
+  text: {
+    color: theme.colorBlack,
+    fontStyle: "italic",
+    fontWeight: "bold",
+    fontFamily: "InriaSerif-BoldItalic",
   },
 });
 
