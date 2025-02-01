@@ -1,5 +1,4 @@
 import { Text, View, StyleSheet, Image } from "react-native";
-import { useFonts } from "expo-font";
 
 const Loading = () => {
   return (

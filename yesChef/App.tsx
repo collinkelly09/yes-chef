@@ -1,10 +1,11 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import SignInScreen from "./components/Signin";
-import { useGetUserQuery } from "./redux/apiSlice";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StatusBar } from "expo-status-bar";
+import { Text } from "react-native";
 import HomeScreen from "./components/HomeScreen";
+import SignInScreen from "./components/Signin";
+import SignUpScreen from "./components/SignUp";
+import { useGetUserQuery } from "./redux/apiSlice";
 import { RootStackParamList } from "./utils/types";
 
 export default function App() {
@@ -18,6 +19,11 @@ export default function App() {
     <NavigationContainer>
       <StatusBar style="auto" />
       <Stack.Navigator>
+        <Stack.Screen
+          name="Signup"
+          component={SignUpScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Signin"
           component={SignInScreen}

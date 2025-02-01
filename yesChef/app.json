@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "android",
-    "slug": "android",
+    "name": "yesChef",
+    "slug": "yesChef",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,15 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/InriaSerif-BoldItalic.ttf",
+            "./assets/fonts/Italianno-Regular.ttf"
+          ]
+        }
+      ]
     ]
   }
 }
