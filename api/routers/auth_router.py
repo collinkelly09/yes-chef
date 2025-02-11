@@ -111,7 +111,6 @@ async def signin(
         samesite="lax",
         secure=secure,
     )
-
     # Convert the UserWithPW to a UserOut
     return UserResponse(**user.model_dump())
 
@@ -131,6 +130,7 @@ async def authenticate(
     This can be used in your frontend to determine if a user
     is logged in or not
     """
+
     return user
 
 

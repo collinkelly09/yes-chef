@@ -7,6 +7,7 @@ import {
   useSignoutMutation,
 } from "../redux/apiSlice";
 import { RootStackParamList } from "../utils/types";
+import { theme } from "../theme";
 
 type HomeScreenProp = NativeStackNavigationProp<RootStackParamList, "Home">;
 
@@ -15,27 +16,49 @@ type Props = {
 };
 
 const HomeScreen = ({ navigation }: Props) => {
-  const [signout, { isSuccess }] = useSignoutMutation();
+  const [signout, { isLoading }] = useSignoutMutation();
 
   const handleSignout = () => {
     signout();
-    if (isSuccess) navigation.navigate("Signin");
+    // if (isSuccess) {
+    navigation.navigate("Signin");
+    // }
   };
 
   return (
-    <View>
-      <Button title="Sign Up" onPress={() => navigation.navigate("Signup")} />
-      <Button title="Signin" onPress={() => navigation.navigate("Signin")} />
-      <Button title="Sign Out" onPress={handleSignout} />
+    <View style={styles.container}>
+      <TouchableOpacity
+        onPress={handleSignout}
+        style={styles.signOut}
+        activeOpacity={0.6}
+        disabled={isLoading}
+      >
+        <Text style={[styles.buttonText, styles.text]}>Sign Out</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingTop: 30,
+    paddingRight: 15,
+  },
   button: {
     backgroundColor: "black",
     padding: 8,
     borderRadius: 8,
+  },
+  buttonText: {
+    fontSize: 19,
+  },
+
+  signOut: {
+    alignSelf: "flex-end",
+  },
+  text: {
+    color: theme.colorBlack,
+    fontFamily: "InriaSerif-BoldItalic",
   },
 });
 

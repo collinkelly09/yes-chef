@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from "react";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React, { useCallback, useEffect, useState } from "react";
 import {
-  View,
+  Alert,
+  StyleSheet,
   Text,
   TextInput,
-  StyleSheet,
-  Alert,
   TouchableOpacity,
+  View,
 } from "react-native";
-import { useSigninMutation } from "../redux/apiSlice";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useSignupMutation } from "../redux/apiSlice";
 import { theme } from "../theme";
-import { RootStackParamList } from "../utils/types";
+import { ErrorResponse, RootStackParamList } from "../utils/types";
 import { useFonts } from "expo-font";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+import { SignUpSchema } from "../utils/validationSchema";
+import BottomLogo from "./BottomLogo";
+import * as SplashScreen from "expo-splash-screen";
 
 type SignUpScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -19,90 +25,144 @@ type SignUpScreenNavigationProp = NativeStackNavigationProp<
 >;
 
 type Props = { navigation: SignUpScreenNavigationProp };
+type SignUpFormData = z.infer<typeof SignUpSchema>;
+
+// SplashScreen.preventAutoHideAsync();
 
 const SignUpScreen = ({ navigation }: Props) => {
-  const [signin, signinStatus] = useSigninMutation();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [signup, signinStatus] = useSignupMutation();
 
-  const [fontsLoaded] = useFonts({
-    "InriaSerif-BoldItalic": require("../assets/fonts/InriaSerif-BoldItalic.ttf"),
-    "Italianno-Regular": require("../assets/fonts/Italianno-Regular.ttf"),
+  // const [fontsLoaded] = useFonts({
+  //   "InriaSerif-BoldItalic": require("../assets/fonts/InriaSerif-BoldItalic.ttf"),
+  //   "Italianno-Regular": require("../assets/fonts/Italianno-Regular.ttf"),
+  // });
+
+  // if (!fontsLoaded) {
+  //   return undefined;
+  // }
+  // const [appIsReady, setAppIsReady] = useState(false);
+
+  // useEffect(() => {
+  //   if (fontsLoaded) {
+  //     setAppIsReady(true);
+  //   }
+  // }, [fontsLoaded]);
+
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (appIsReady) {
+  //     // Hide the splash screen once the app is ready
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [appIsReady]);
+
+  // if (!appIsReady) {
+  //   return null; // Return null or a loading indicator while the app is not ready
+  // }
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpFormData>({
+    resolver: zodResolver(SignUpSchema),
   });
 
-  if (!fontsLoaded) {
-    return undefined;
-  }
-
-  const handleSignIn = async () => {
-    if (!username || !password) {
-      Alert.alert("Error", "Please enter both username and password");
-      return;
-    }
-
+  const onSubmit = async (data: SignUpFormData) => {
     try {
-      const credentials = { username, password };
-
-      await signin(credentials).unwrap();
-
-      // Alert.alert("Success", "You are logged in!");
+      const credentials = {
+        name: data.firstName,
+        username: data.username,
+        password: data.password,
+      };
+      await signup(credentials).unwrap();
       navigation.navigate("Home");
-    } catch (err) {
-      if (err instanceof Error) {
-        Alert.alert("Error", err.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert("Error", error.message);
       } else {
-        Alert.alert("Error", "An unexpected error occurred");
+        Alert.alert("Error", (error as ErrorResponse).data.detail);
       }
     }
   };
+
+  errors.password && Alert.alert("Error", errors.password.message);
 
   return (
     <View style={styles.container}>
       <View>
         <Text style={[styles.heading, styles.text]}>Sign Up</Text>
-
         <View style={styles.inputContainer}>
           <Text style={[styles.inputText, styles.text]}>First Name</Text>
-          <TextInput
-            style={styles.input}
-            value={username}
-            onChangeText={setUsername}
+          <Controller
+            control={control}
+            name="firstName"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+              />
+            )}
           />
+          {errors.firstName && <Text>{errors.firstName?.message}</Text>}
         </View>
 
         <View style={styles.inputContainer}>
           <Text style={[styles.inputText, styles.text]}>Username</Text>
-          <TextInput
-            style={styles.input}
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
+          <Controller
+            control={control}
+            name="username"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+              />
+            )}
           />
+          {errors.username && <Text>{errors.username?.message}</Text>}
         </View>
-
         <View style={styles.inputContainer}>
           <Text style={[styles.inputText, styles.text]}>Password</Text>
-          <TextInput
-            style={styles.input}
-            value={username}
-            onChangeText={setUsername}
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                secureTextEntry
+              />
+            )}
           />
         </View>
-
         <View style={styles.inputContainer}>
           <Text style={[styles.inputText, styles.text]}>Confirm Password</Text>
-          <TextInput
-            style={styles.input}
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
+          <Controller
+            control={control}
+            name="confirmPassword"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                secureTextEntry
+              />
+            )}
           />
+          {errors.confirmPassword && (
+            <Text>{errors.confirmPassword?.message}</Text>
+          )}
         </View>
-
         <TouchableOpacity
-          onPress={handleSignIn}
+          onPress={handleSubmit(onSubmit)}
           disabled={signinStatus.isLoading}
-          style={styles.signIn}
+          style={styles.signUp}
           activeOpacity={0.6}
         >
           {signinStatus.isLoading ? (
@@ -112,21 +172,16 @@ const SignUpScreen = ({ navigation }: Props) => {
           )}
         </TouchableOpacity>
 
-        <View style={styles.logoContainer}>
-          <Text style={styles.logo}>
-            {"  "}yesChef{"  "}
-          </Text>
-        </View>
-
-        {/* <TouchableOpacity
-          // onPress={handleSignIn}
-          disabled={signinStatus.isLoading}
-          style={styles.signUp}
-          activeOpacity={0.6}
-        >
-          <Text style={[styles.buttonText, styles.text]}>Sign Up</Text>
-        </TouchableOpacity> */}
+        <BottomLogo />
       </View>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Signin")}
+        style={styles.signIn}
+        activeOpacity={0.6}
+      >
+        <Text style={[styles.buttonText, styles.text]}>Sign In</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -139,6 +194,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: theme.colorWhite,
     paddingTop: 150,
+    paddingBottom: 30,
   },
   text: {
     color: theme.colorBlack,
@@ -171,21 +227,8 @@ const styles = StyleSheet.create({
   signIn: {
     alignSelf: "flex-end",
   },
-  // signUp: {
-  //   flex: 1,
-  //   alignSelf: "center",
-  //   justifyContent: "flex-end",
-  //   paddingBottom: 16,
-  // },
-  logoContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-    paddingBottom: 10,
-    paddingLeft: 18,
-  },
-  logo: {
-    fontFamily: "Italianno-Regular",
-    fontSize: 75,
+  signUp: {
+    alignSelf: "flex-end",
   },
 });
 

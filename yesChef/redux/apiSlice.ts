@@ -56,7 +56,7 @@ export const recipeApi = createApi({
       invalidatesTags: ["User"],
     }),
 
-    signout: builder.mutation<null | ErrorResponse, void>({
+    signout: builder.mutation<void | ErrorResponse, void>({
       query: () => ({
         url: "api/auth/signout",
         method: "DELETE",

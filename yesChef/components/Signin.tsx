@@ -10,8 +10,13 @@ import {
 import { useSigninMutation } from "../redux/apiSlice";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { theme } from "../theme";
-import { RootStackParamList } from "../utils/types";
+import { ErrorResponse, RootStackParamList } from "../utils/types";
 import { useFonts } from "expo-font";
+import BottomLogo from "./BottomLogo";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+import { SignInSchema } from "../utils/validationSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type SigninScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -19,39 +24,49 @@ type SigninScreenNavigationProp = NativeStackNavigationProp<
 >;
 
 type Props = { navigation: SigninScreenNavigationProp };
+type SignInFormData = z.infer<typeof SignInSchema>;
 
 const SignInScreen = ({ navigation }: Props) => {
   const [signin, signinStatus] = useSigninMutation();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
 
-  const [fontsLoaded] = useFonts({
-    "InriaSerif-BoldItalic": require("../assets/fonts/InriaSerif-BoldItalic.ttf"),
-    "Italianno-Regular": require("../assets/fonts/Italianno-Regular.ttf"),
+  // const [fontsLoaded] = useFonts({
+  //   "InriaSerif-BoldItalic": require("../assets/fonts/InriaSerif-BoldItalic.ttf"),
+  //   "Italianno-Regular": require("../assets/fonts/Italianno-Regular.ttf"),
+  // });
+
+  // if (!fontsLoaded) {
+  //   return undefined;
+  // }
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInFormData>({
+    resolver: zodResolver(SignInSchema),
   });
 
-  if (!fontsLoaded) {
-    return undefined;
-  }
-
-  const handleSignIn = async () => {
-    if (!username || !password) {
-      Alert.alert("Error", "Please enter both username and password");
-      return;
-    }
+  const onSubmit = async (data: SignInFormData) => {
+    // if (!username || !password) {
+    //   Alert.alert("Error", "Please enter both username and password");
+    //   return;
+    // }
 
     try {
-      const credentials = { username, password };
+      const credentials = {
+        username: data.username,
+        password: data.password,
+      };
 
       await signin(credentials).unwrap();
 
       // Alert.alert("Success", "You are logged in!");
       navigation.navigate("Home");
-    } catch (err) {
-      if (err instanceof Error) {
-        Alert.alert("Error", err.message);
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert("Error", error.message);
       } else {
-        Alert.alert("Error", "An unexpected error occurred");
+        Alert.alert("Error", (error as ErrorResponse).data.detail);
       }
     }
   };
@@ -63,25 +78,39 @@ const SignInScreen = ({ navigation }: Props) => {
 
         <View style={styles.inputContainer}>
           <Text style={[styles.inputText, styles.text]}>Username</Text>
-          <TextInput
-            style={styles.input}
-            value={username}
-            onChangeText={setUsername}
+          <Controller
+            control={control}
+            name="username"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+              />
+            )}
           />
+          {errors.username && <Text>{errors.username?.message}</Text>}
         </View>
-
         <View style={styles.inputContainer}>
           <Text style={[styles.inputText, styles.text]}>Password</Text>
-          <TextInput
-            style={styles.input}
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                secureTextEntry
+              />
+            )}
           />
         </View>
 
         <TouchableOpacity
-          onPress={handleSignIn}
+          onPress={handleSubmit(onSubmit)}
           disabled={signinStatus.isLoading}
           style={styles.signIn}
           activeOpacity={0.6}
@@ -93,21 +122,15 @@ const SignInScreen = ({ navigation }: Props) => {
           )}
         </TouchableOpacity>
 
-        <View style={styles.logoContainer}>
-          <Text style={styles.logo}>
-            {"  "}yesChef{"  "}
-          </Text>
-        </View>
-
-        {/* <TouchableOpacity
-          // onPress={handleSignIn}
-          disabled={signinStatus.isLoading}
-          style={styles.signUp}
-          activeOpacity={0.6}
-        >
-          <Text style={[styles.buttonText, styles.text]}>Sign Up</Text>
-        </TouchableOpacity> */}
+        <BottomLogo />
       </View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Signup")}
+        style={styles.signIn}
+        activeOpacity={0.6}
+      >
+        <Text style={[styles.buttonText, styles.text]}>Sign Up</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -120,6 +143,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: theme.colorWhite,
     paddingTop: 150,
+    paddingBottom: 30,
   },
   text: {
     color: theme.colorBlack,
@@ -152,21 +176,8 @@ const styles = StyleSheet.create({
   signIn: {
     alignSelf: "flex-end",
   },
-  // signUp: {
-  //   flex: 1,
-  //   alignSelf: "center",
-  //   justifyContent: "flex-end",
-  //   paddingBottom: 16,
-  // },
-  logoContainer: {
-    flex: 1,
+  signUp: {
     justifyContent: "flex-end",
-    paddingBottom: 10,
-    paddingLeft: 18,
-  },
-  logo: {
-    fontFamily: "Italianno-Regular",
-    fontSize: 75,
   },
 });
 

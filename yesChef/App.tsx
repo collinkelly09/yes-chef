@@ -20,19 +20,19 @@ export default function App() {
       <StatusBar style="auto" />
       <Stack.Navigator>
         <Stack.Screen
-          name="Signup"
-          component={SignUpScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
           name="Signin"
           component={SignInScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
+          name="Signup"
+          component={SignUpScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: "Welcome" }}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

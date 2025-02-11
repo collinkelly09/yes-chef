@@ -83,9 +83,11 @@ export interface CategoryResponseList {
 
 //* Other Types
 
-// Error
 export interface ErrorResponse {
-  detail: string;
+  data: {
+    detail: string;
+  };
+  status: number;
 }
 
 // Root Stack Param

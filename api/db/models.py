@@ -9,7 +9,6 @@ from sqlalchemy import (
 from utils.config import DATABASE_URL
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped, relationship
 from sqlalchemy.sql import func
-from datetime import datetime
 from typing import Optional
 from db.db_types import str_100, str_256
 
