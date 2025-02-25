@@ -92,8 +92,12 @@ export interface ErrorResponse {
 
 // Root Stack Param
 export type RootStackParamList = {
-  Welcome: undefined;
   Signin: undefined;
   Signup: undefined;
-  Home: undefined;
+};
+
+// Root Drawer Param
+export type RootDrawerParamList = {
+  Welcome: undefined;
+  Home: { userId: string };
 };

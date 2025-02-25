@@ -33,7 +33,8 @@
             "./assets/fonts/Italianno-Regular.ttf"
           ]
         }
-      ]
+      ],
+      "expo-router"
     ]
   }
 }

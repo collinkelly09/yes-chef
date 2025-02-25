@@ -1,32 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
 import { Text, TouchableOpacity, View, StyleSheet, Button } from "react-native";
 import {
   useGetUserQuery,
   useListRecipesQuery,
   useSignoutMutation,
 } from "../redux/apiSlice";
-import { RootStackParamList } from "../utils/types";
+import { RootDrawerParamList, RootStackParamList } from "../utils/types";
 import { theme } from "../theme";
+import Menu from "./Menu";
 
-type HomeScreenProp = NativeStackNavigationProp<RootStackParamList, "Home">;
+type HomeScreenNavigationProp = DrawerNavigationProp<
+  RootDrawerParamList,
+  "Home"
+>;
+type Props = { navigation: HomeScreenNavigationProp };
 
-type Props = {
-  navigation: HomeScreenProp;
-};
-
-const HomeScreen = ({ navigation }: Props) => {
+const HomeScreen = () => {
   const [signout, { isLoading }] = useSignoutMutation();
 
   const handleSignout = () => {
     signout();
-    // if (isSuccess) {
-    navigation.navigate("Signin");
-    // }
   };
 
   return (
     <View style={styles.container}>
+      {/* <Menu /> */}
       <TouchableOpacity
         onPress={handleSignout}
         style={styles.signOut}

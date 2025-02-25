@@ -12,7 +12,7 @@ class RecipeRequest(BaseModel):
 
     name: str
     photo_url: str
-    # rating: int
+    rating: int
 
 
 class RecipeResponse(BaseModel):
@@ -55,7 +55,7 @@ class RecipeListResponse(BaseModel):
     id: int
     name: str
     photo_url: str
-    # rating: int
+    rating: int
     created_at: datetime
     user_id: int
 

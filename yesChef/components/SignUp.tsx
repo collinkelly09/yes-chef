@@ -75,7 +75,6 @@ const SignUpScreen = ({ navigation }: Props) => {
         password: data.password,
       };
       await signup(credentials).unwrap();
-      navigation.navigate("Home");
     } catch (error) {
       if (error instanceof Error) {
         Alert.alert("Error", error.message);

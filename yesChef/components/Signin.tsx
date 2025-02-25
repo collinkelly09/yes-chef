@@ -59,9 +59,6 @@ const SignInScreen = ({ navigation }: Props) => {
       };
 
       await signin(credentials).unwrap();
-
-      // Alert.alert("Success", "You are logged in!");
-      navigation.navigate("Home");
     } catch (error) {
       if (error instanceof Error) {
         Alert.alert("Error", error.message);
