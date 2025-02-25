@@ -9,13 +9,13 @@ import {
 } from "../redux/apiSlice";
 import { RootDrawerParamList, RootStackParamList } from "../utils/types";
 import { theme } from "../theme";
-import Menu from "./Menu";
+import Menu from "./menu/Menu";
 
-type HomeScreenNavigationProp = DrawerNavigationProp<
-  RootDrawerParamList,
-  "Home"
->;
-type Props = { navigation: HomeScreenNavigationProp };
+// type HomeScreenNavigationProp = DrawerNavigationProp<
+//   RootDrawerParamList,
+//   "Home"
+// >;
+// type Props = { navigation: HomeScreenNavigationProp };
 
 const HomeScreen = () => {
   const [signout, { isLoading }] = useSignoutMutation();
@@ -24,26 +24,11 @@ const HomeScreen = () => {
     signout();
   };
 
-  return (
-    <View style={styles.container}>
-      {/* <Menu /> */}
-      <TouchableOpacity
-        onPress={handleSignout}
-        style={styles.signOut}
-        activeOpacity={0.6}
-        disabled={isLoading}
-      >
-        <Text style={[styles.buttonText, styles.text]}>Sign Out</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  return <View style={styles.container}></View>;
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 30,
-    paddingRight: 15,
-  },
+  container: {},
   button: {
     backgroundColor: "black",
     padding: 8,

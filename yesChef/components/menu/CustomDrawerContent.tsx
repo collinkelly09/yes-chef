@@ -6,7 +6,7 @@ import {
 } from "@react-navigation/drawer";
 import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 import LogoutButton from "./LogoutButton";
-import { theme } from "../theme";
+import { theme } from "../../theme";
 
 export default function CustomDrawerContent(
   props: DrawerContentComponentProps

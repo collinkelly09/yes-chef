@@ -1,9 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { useSignoutMutation } from "../redux/apiSlice";
-import { theme } from "../theme";
+import { useSignoutMutation } from "../../redux/apiSlice";
+import { theme } from "../../theme";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { RootDrawerParamList } from "../utils/types";
+import { RootDrawerParamList } from "../../utils/types";
 
 export default function LogoutButton(props: any) {
   const [signout, { isLoading }] = useSignoutMutation();

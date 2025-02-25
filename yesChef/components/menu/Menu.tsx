@@ -1,22 +1,32 @@
+import {
+  DrawerContentComponentProps,
+  DrawerNavigationHelpers,
+} from "@react-navigation/drawer/lib/typescript/commonjs/src/types";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 
-const Menu = () => {
+export default function Menu({
+  navigation,
+}: {
+  navigation: DrawerNavigationHelpers;
+}) {
   return (
-    <View>
-      <TouchableOpacity style={styles.menuButton}>
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.menuButton}
+        onPress={() => navigation.toggleDrawer()}
+      >
         <View style={styles.barType1}></View>
         <View style={styles.barType2}></View>
         <View style={styles.barType1}></View>
       </TouchableOpacity>
     </View>
   );
-};
-
-export default Menu;
+}
 
 const styles = StyleSheet.create({
+  // container: { width: "f" },
   menuButton: {
-    paddingTop: 15,
+    paddingTop: 45,
     paddingLeft: 20,
   },
   barType1: {
