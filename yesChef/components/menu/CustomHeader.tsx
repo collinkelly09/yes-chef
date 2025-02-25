@@ -1,14 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
+import { DrawerHeaderProps } from "@react-navigation/drawer/lib/typescript/commonjs/src/types";
 import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import Menu from "./Menu";
-import { DrawerContentComponentProps } from "@react-navigation/drawer";
-import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/commonjs/src/types";
 
-export default function CustomHeader({
-  navigation,
-}: {
-  navigation: DrawerNavigationHelpers;
-}) {
+export default function CustomHeader({ navigation }: DrawerHeaderProps) {
   return (
     <View>
       <View style={styles.header}>

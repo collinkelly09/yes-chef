@@ -1,16 +1,17 @@
 import {
-  DrawerContentComponentProps,
-  DrawerNavigationHelpers,
+  DrawerHeaderProps,
+  DrawerNavigationProp,
 } from "@react-navigation/drawer/lib/typescript/commonjs/src/types";
-import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { ParamListBase } from "@react-navigation/native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function Menu({
   navigation,
 }: {
-  navigation: DrawerNavigationHelpers;
+  navigation: DrawerNavigationProp<ParamListBase>;
 }) {
   return (
-    <View style={styles.container}>
+    <View>
       <TouchableOpacity
         style={styles.menuButton}
         onPress={() => navigation.toggleDrawer()}
@@ -24,7 +25,6 @@ export default function Menu({
 }
 
 const styles = StyleSheet.create({
-  // container: { width: "f" },
   menuButton: {
     paddingTop: 45,
     paddingLeft: 20,

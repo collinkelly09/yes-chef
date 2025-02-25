@@ -98,6 +98,7 @@ export type RootStackParamList = {
 
 // Root Drawer Param
 export type RootDrawerParamList = {
-  Welcome: undefined;
-  Home: { userId: string };
+  Home: undefined;
+  Recipes: undefined;
+  Categories: undefined;
 };

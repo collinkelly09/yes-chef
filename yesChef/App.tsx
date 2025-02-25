@@ -8,7 +8,7 @@ import HomeScreen from "./components/HomeScreen";
 import SignInScreen from "./components/Signin";
 import SignUpScreen from "./components/SignUp";
 import { useGetUserQuery } from "./redux/apiSlice";
-import { RootStackParamList } from "./utils/types";
+import { RootDrawerParamList, RootStackParamList } from "./utils/types";
 import LogoutButton from "./components/menu/LogoutButton";
 import CustomDrawerContent from "./components/menu/CustomDrawerContent";
 import CustomHeader from "./components/menu/CustomHeader";
@@ -19,7 +19,7 @@ export default function App() {
   if (userLoading) return <Text>Loading user...</Text>;
 
   const Stack = createNativeStackNavigator<RootStackParamList>();
-  const Drawer = createDrawerNavigator();
+  const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
   return (
     <NavigationContainer>
@@ -33,8 +33,16 @@ export default function App() {
             component={HomeScreen}
             options={{ header: (props) => <CustomHeader {...props} /> }}
           />
-          <Drawer.Screen name="Recipes" component={LogoutButton} />
-          <Drawer.Screen name="Categories" component={HomeScreen} />
+          <Drawer.Screen
+            name="Recipes"
+            component={LogoutButton}
+            options={{ header: (props) => <CustomHeader {...props} /> }}
+          />
+          <Drawer.Screen
+            name="Categories"
+            component={HomeScreen}
+            options={{ header: (props) => <CustomHeader {...props} /> }}
+          />
         </Drawer.Navigator>
       ) : (
         <Stack.Navigator>
