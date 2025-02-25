@@ -7,6 +7,7 @@ import {
 import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 import LogoutButton from "./LogoutButton";
 import { theme } from "../../theme";
+import MenuButton from "./MenuButton";
 
 export default function CustomDrawerContent(
   props: DrawerContentComponentProps
@@ -16,21 +17,11 @@ export default function CustomDrawerContent(
       {...props}
       contentContainerStyle={styles.container}
     >
-      <Text></Text>
-
-      <TouchableOpacity
-        onPress={() => props.navigation.navigate("Home")}
-        activeOpacity={0.6}
-      >
-        <Text style={[styles.text]}>Home</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => props.navigation.navigate("Recipes")}
-        activeOpacity={0.6}
-      >
-        <Text style={[styles.text]}>Recipes</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonList}>
+        <MenuButton props={props} name="Home" />
+        <MenuButton props={props} name="Recipes" />
+        <MenuButton props={props} name="Categories" />
+      </View>
 
       <LogoutButton {...props} styles={styles.logout} />
     </DrawerContentScrollView>
@@ -40,6 +31,10 @@ export default function CustomDrawerContent(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  buttonList: {
+    marginTop: 15,
+    gap: 5,
   },
   logout: {
     alignSelf: "baseline",
