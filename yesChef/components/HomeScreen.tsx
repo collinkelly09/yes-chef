@@ -5,6 +5,7 @@ import { Text, TouchableOpacity, View, StyleSheet, Button } from "react-native";
 import { useListRecipesQuery, useListCategoriesQuery } from "../redux/apiSlice";
 // import { RootDrawerParamList, RootStackParamList } from "../utils/types";
 import { theme } from "../theme";
+import CategoryCard from "./CategoryCard";
 
 const HomeScreen = () => {
   // const [fontsLoaded] = useFonts({
@@ -36,15 +37,7 @@ const HomeScreen = () => {
 
       <View>
         <Text style={[styles.text, styles.subheading]}>Categories</Text>
-        <View style={styles.categoryContainer}>
-          {categoryData &&
-            categoryData.categories.slice(0, 6).map((category) => (
-              <View key={category.id} style={styles.categoryCard}>
-                <Text style={styles.text}>{category.name}</Text>
-              </View>
-            ))}
-          <Text style={[styles.text, styles.more]}>More...</Text>
-        </View>
+        {categoryData && <CategoryCard categories={categoryData.categories} />}
       </View>
 
       <View>
