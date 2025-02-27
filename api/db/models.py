@@ -27,10 +27,7 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column()
     username: Mapped[str_100] = mapped_column()
-    # email: Mapped[str_100] = mapped_column()
-    # email_verified: Mapped[Optional[datetime]] = mapped_column()
     hashed_password: Mapped[str_256] = mapped_column()
-    # image: Mapped[Optional[str]] = mapped_column()
 
 
 class Recipe(Base):

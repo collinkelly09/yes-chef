@@ -75,7 +75,7 @@ export const recipeApi = createApi({
       providesTags: [{ type: "Recipes", id: "ONE" }],
     }),
 
-    listRecipes: builder.query<RecipeListResponse | ErrorResponse, void>({
+    listRecipes: builder.query<RecipeListResponse, void>({
       query: () => ({
         url: "/api/recipes",
       }),
@@ -194,22 +194,21 @@ export const recipeApi = createApi({
     }),
 
     // Category Queries and Mutations
-    listCategories: builder.query<CategoryResponseList | ErrorResponse, void>({
+    listCategories: builder.query<CategoryResponseList, void>({
       query: () => ({
         url: "/api/categories",
       }),
       providesTags: [{ type: "Categories", id: "ALL" }],
     }),
 
-    getCategoryDetails: builder.query<
-      CategoryResponse | ErrorResponse,
-      { categoryId: number }
-    >({
-      query: (categoryId) => ({
-        url: `/api/categories/${categoryId}`,
-      }),
-      providesTags: [{ type: "Categories", id: "ONE" }],
-    }),
+    getCategoryDetails: builder.query<CategoryResponse, { categoryId: number }>(
+      {
+        query: (categoryId) => ({
+          url: `/api/categories/${categoryId}`,
+        }),
+        providesTags: [{ type: "Categories", id: "ONE" }],
+      }
+    ),
 
     createCategory: builder.mutation<
       CategoryResponse | ErrorResponse,

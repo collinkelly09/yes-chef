@@ -23,6 +23,7 @@ class RecipeQueries:
             recipe = Recipe(
                 name=recipe_in.name,
                 photo_url=recipe_in.photo_url,
+                rating=recipe_in.rating,
                 user_id=user_id,
             )
             session.add(recipe)

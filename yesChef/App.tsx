@@ -23,7 +23,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      {/* <StatusBar style="auto" /> */}
+      <StatusBar style="auto" />
       {user ? (
         <Drawer.Navigator
           drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -50,12 +50,12 @@ export default function App() {
             <Stack.Screen
               name="Signin"
               component={SignInScreen}
-              options={{ headerShown: false }}
+              // options={{ headerShown: false }}
             />
             <Stack.Screen
               name="Signup"
               component={SignUpScreen}
-              options={{ headerShown: false }}
+              // options={{ headerShown: false }}
             />
           </>
         </Stack.Navigator>

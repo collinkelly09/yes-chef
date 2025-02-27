@@ -23,6 +23,7 @@ class RecipeResponse(BaseModel):
     id: int
     name: str
     photo_url: str
+    rating: int
     created_at: datetime
     user_id: int
     ingredients: List[IngredientResponse]

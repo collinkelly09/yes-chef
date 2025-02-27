@@ -44,9 +44,8 @@ export interface RecipeListResponse {
     photo_url?: string;
     created_at: string;
     user_id: number;
-  };
+  }[];
 }
-[];
 
 // Ingredient Types
 export type IngredientRequest = z.infer<typeof ingredientSchema>;
