@@ -65,7 +65,11 @@ class RecipeQueries:
             stmt = (
                 update(Recipe)
                 .where(Recipe.id == recipe_id, Recipe.user_id == user_id)
-                .values(name=recipe_in.name, photo_url=recipe_in.photo_url)
+                .values(
+                    name=recipe_in.name,
+                    photo_url=recipe_in.photo_url,
+                    rating=recipe_in.rating,
+                )
             )
             result = session.execute(stmt)
             session.commit()

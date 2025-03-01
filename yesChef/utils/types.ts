@@ -30,6 +30,7 @@ export type RecipeRequest = z.infer<typeof recipeSchema>;
 export interface RecipeResponse {
   id: number;
   name: string;
+  rating: number;
   photo_url: string;
   created_at: string;
   user_id: number;
@@ -38,13 +39,16 @@ export interface RecipeResponse {
 }
 
 export interface RecipeListResponse {
-  recipes: {
-    id: number;
-    name: string;
-    photo_url?: string;
-    created_at: string;
-    user_id: number;
-  }[];
+  id: number;
+  name: string;
+  rating: number;
+  photo_url?: string;
+  created_at: string;
+  user_id: number;
+}
+
+export interface RecipeResponseList {
+  recipes: RecipeListResponse[];
 }
 
 // Ingredient Types
@@ -73,7 +77,9 @@ export type CategoryRequest = z.infer<typeof categorySchema>;
 export interface CategoryResponse {
   id: number;
   name: string;
-  recipes?: RecipeListResponse;
+export interface RecipeListResponse {}
+  
+  recipes?: RecipeResponsListe;
 }
 
 export interface CategoryResponseList {

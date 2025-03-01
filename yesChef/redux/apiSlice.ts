@@ -4,7 +4,7 @@ import {
   SignUpRequest,
   LoginRequest,
   ErrorResponse,
-  RecipeListResponse,
+  RecipeResponseList,
   RecipeResponse,
   RecipeRequest,
   IngredientResponse,
@@ -75,7 +75,7 @@ export const recipeApi = createApi({
       providesTags: [{ type: "Recipes", id: "ONE" }],
     }),
 
-    listRecipes: builder.query<RecipeListResponse, void>({
+    listRecipes: builder.query<RecipeResponseList, void>({
       query: () => ({
         url: "/api/recipes",
       }),

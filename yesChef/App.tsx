@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { StatusBar } from "expo-status-bar";
 import { Text } from "react-native";
-import HomeScreen from "./components/HomeScreen";
+import HomeScreen from "./components/home/HomeScreen";
 import SignInScreen from "./components/Signin";
 import SignUpScreen from "./components/SignUp";
 import { useGetUserQuery } from "./redux/apiSlice";

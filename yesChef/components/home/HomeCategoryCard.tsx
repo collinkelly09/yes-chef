@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { CategoryResponseList } from "../utils/types";
-import { theme } from "../theme";
+import { CategoryResponseList } from "../../utils/types";
+import { theme } from "../../theme";
 
-export default function CategoryCard({ categories }: CategoryResponseList) {
+export default function HomeCategoryCard({ categories }: CategoryResponseList) {
   return (
     <View style={styles.categoryContainer}>
       {categories.slice(0, 6).map((category) => (
