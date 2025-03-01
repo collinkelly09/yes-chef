@@ -11,6 +11,7 @@ import { theme } from "../../theme";
 import HomeCategoryCard from "./HomeCategoryCard";
 import HomeRecipeCard from "./HomeRecipeCard";
 import Loading from "../Loading";
+import RecipeCard from "../RecipeCard";
 
 const HomeScreen = () => {
   // const [fontsLoaded] = useFonts({
@@ -46,6 +47,7 @@ const HomeScreen = () => {
 
       <View>
         <Text style={styles.subheading}>Recently Added</Text>
+        {recipeData && <RecipeCard recipes={recipeData.recipes.slice(0, 5)} />}
       </View>
     </View>
   );

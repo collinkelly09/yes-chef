@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View, Image, FlatList } from "react-native";
 import React from "react";
-import { RecipeResponseList } from "../../utils/types";
+import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { theme } from "../../theme";
 import { starConversion } from "../../utils/conversion";
+import { RecipeResponseList } from "../../utils/types";
 
 interface RecipeItem {
   id: number;
@@ -13,21 +13,19 @@ interface RecipeItem {
 
 const RecipeItem = ({ name, photo_url, id, rating }: RecipeItem) => {
   return (
-    <View>
-      <View key={id} style={styles.recipeCard}>
-        <Image source={{ uri: photo_url }} style={styles.image} />
-        <Text style={styles.text} ellipsizeMode="tail" numberOfLines={1}>
-          {name}
-        </Text>
-        <Text style={styles.stars}>{starConversion(rating)}</Text>
-      </View>
+    <View key={id} style={styles.recipeCard}>
+      <Image source={{ uri: photo_url }} style={styles.image} />
+      <Text style={styles.text} ellipsizeMode="tail" numberOfLines={1}>
+        {name}
+      </Text>
+      <Text style={styles.stars}>{starConversion(rating)}</Text>
     </View>
   );
 };
 
 export default function HomeRecipeCard({ recipes }: RecipeResponseList) {
   return (
-    <View style={styles.recipeContainer}>
+    <View>
       <FlatList
         data={recipes}
         renderItem={({ item }) => (
@@ -51,9 +49,6 @@ const styles = StyleSheet.create({
     height: 80,
     resizeMode: "cover",
     borderRadius: 15,
-  },
-  recipeContainer: {
-    flexDirection: "row",
   },
   recipeCard: {
     backgroundColor: "#e0e0e0",
