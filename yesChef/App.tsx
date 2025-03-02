@@ -1,17 +1,17 @@
 import "./gesture-handler";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import { StatusBar } from "expo-status-bar";
 import { Text } from "react-native";
-import HomeScreen from "./components/home/HomeScreen";
-import SignInScreen from "./components/Signin";
-import SignUpScreen from "./components/SignUp";
+import SignInScreen from "./screens/Auth/Signin";
+import SignUpScreen from "./screens/Auth/SignUp";
 import { useGetUserQuery } from "./redux/apiSlice";
+import HomeScreen from "./screens/Home/HomeScreen";
+import CustomDrawerContent from "./screens/Menu/CustomDrawerContent";
+import CustomHeader from "./screens/Menu/CustomHeader";
+import LogoutButton from "./screens/Menu/LogoutButton";
 import { RootDrawerParamList, RootStackParamList } from "./utils/types";
-import LogoutButton from "./components/menu/LogoutButton";
-import CustomDrawerContent from "./components/menu/CustomDrawerContent";
-import CustomHeader from "./components/menu/CustomHeader";
 
 export default function App() {
   const { data: user, isLoading: userLoading } = useGetUserQuery();
@@ -50,12 +50,12 @@ export default function App() {
             <Stack.Screen
               name="Signin"
               component={SignInScreen}
-              // options={{ headerShown: false }}
+              options={{ headerShown: false }}
             />
             <Stack.Screen
               name="Signup"
               component={SignUpScreen}
-              // options={{ headerShown: false }}
+              options={{ headerShown: false }}
             />
           </>
         </Stack.Navigator>

@@ -77,9 +77,7 @@ export type CategoryRequest = z.infer<typeof categorySchema>;
 export interface CategoryResponse {
   id: number;
   name: string;
-export interface RecipeListResponse {}
-  
-  recipes?: RecipeResponsListe;
+  recipes?: RecipeResponseList;
 }
 
 export interface CategoryResponseList {

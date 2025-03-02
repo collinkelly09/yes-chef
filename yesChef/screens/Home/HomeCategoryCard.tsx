@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 10,
+    marginRight: 15,
   },
   more: {
     alignSelf: "center",

@@ -1,44 +1,28 @@
 import React from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { theme } from "../../theme";
 import { starConversion } from "../../utils/conversion";
-import { RecipeResponseList } from "../../utils/types";
 
-interface RecipeItem {
+interface RecentlyAddedRecipe {
   id: number;
   name: string;
   photo_url: string | undefined;
   rating: number;
 }
 
-const RecipeItem = ({ name, photo_url, id, rating }: RecipeItem) => {
+export default function RecentlyAddedRecipe({
+  name,
+  photo_url,
+  id,
+  rating,
+}: RecentlyAddedRecipe) {
   return (
-    <View key={id} style={styles.recipeCard}>
+    <View style={styles.recipeCard}>
       <Image source={{ uri: photo_url }} style={styles.image} />
       <Text style={styles.text} ellipsizeMode="tail" numberOfLines={1}>
         {name}
       </Text>
       <Text style={styles.stars}>{starConversion(rating)}</Text>
-    </View>
-  );
-};
-
-export default function HomeRecipeCard({ recipes }: RecipeResponseList) {
-  return (
-    <View>
-      <FlatList
-        data={recipes}
-        renderItem={({ item }) => (
-          <RecipeItem
-            name={item.name}
-            id={item.id}
-            photo_url={item.photo_url}
-            rating={item.rating}
-          />
-        )}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      />
     </View>
   );
 }

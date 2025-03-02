@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 // import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 // import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { Text, TouchableOpacity, View, StyleSheet, Button } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import {
-  useListRecipesQuery,
   useListCategoriesQuery,
+  useListRecipesQuery,
 } from "../../redux/apiSlice";
-// import { RootDrawerParamList, RootStackParamList } from "../utils/types";
-import { theme } from "../../theme";
 import HomeCategoryCard from "./HomeCategoryCard";
-import HomeRecipeCard from "./HomeRecipeCard";
-import Loading from "../Loading";
-import RecipeCard from "../RecipeCard";
+import RecentlyAddedList from "./RecentlyAddedList";
+import RecipeCardList from "../../components/RecipeCardList";
 
 const HomeScreen = () => {
   // const [fontsLoaded] = useFonts({
@@ -32,9 +29,9 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.section}>
-        <Text style={styles.subheading}>Recipes</Text>
+        <Text style={styles.subheading}>Recently Added</Text>
         {recipeData && (
-          <HomeRecipeCard recipes={recipeData.recipes.slice(0, 16)} />
+          <RecentlyAddedList recipes={recipeData.recipes.slice(0, 10)} />
         )}
       </View>
 
@@ -45,9 +42,9 @@ const HomeScreen = () => {
         )}
       </View>
 
-      <View>
-        <Text style={styles.subheading}>Recently Added</Text>
-        {recipeData && <RecipeCard recipes={recipeData.recipes.slice(0, 5)} />}
+      <View style={styles.favorites}>
+        <Text style={styles.subheading}>Favorites</Text>
+        {recipeData && <RecipeCardList recipes={recipeData.recipes} />}
       </View>
     </View>
   );
@@ -65,6 +62,9 @@ const styles = StyleSheet.create({
     fontFamily: "InriaSerif-BoldItalic",
     fontSize: 23,
     paddingBottom: 15,
+  },
+  favorites: {
+    height: Dimensions.get("window").height * 0.5,
   },
 });
 

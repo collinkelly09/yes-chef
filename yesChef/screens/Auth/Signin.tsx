@@ -7,16 +7,17 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
-import { useSigninMutation } from "../redux/apiSlice";
+import { useSigninMutation } from "../../redux/apiSlice";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { theme } from "../theme";
-import { ErrorResponse, RootStackParamList } from "../utils/types";
+import { theme } from "../../theme";
+import { ErrorResponse, RootStackParamList } from "../../utils/types";
 import { useFonts } from "expo-font";
-import BottomLogo from "./BottomLogo";
+import BottomLogo from "../../components/BottomLogo";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-import { SignInSchema } from "../utils/validationSchema";
+import { SignInSchema } from "../../utils/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import InputField from "./InputField";
 
 type SigninScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -47,11 +48,6 @@ const SignInScreen = ({ navigation }: Props) => {
   });
 
   const onSubmit = async (data: SignInFormData) => {
-    // if (!username || !password) {
-    //   Alert.alert("Error", "Please enter both username and password");
-    //   return;
-    // }
-
     try {
       const credentials = {
         username: data.username,
@@ -73,38 +69,20 @@ const SignInScreen = ({ navigation }: Props) => {
       <View>
         <Text style={[styles.heading, styles.text]}>Sign In</Text>
 
-        <View style={styles.inputContainer}>
-          <Text style={[styles.inputText, styles.text]}>Username</Text>
-          <Controller
-            control={control}
-            name="username"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                style={styles.input}
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-              />
-            )}
-          />
-          {errors.username && <Text>{errors.username?.message}</Text>}
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={[styles.inputText, styles.text]}>Password</Text>
-          <Controller
-            control={control}
-            name="password"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                style={styles.input}
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                secureTextEntry
-              />
-            )}
-          />
-        </View>
+        <InputField
+          errors={errors}
+          control={control}
+          text="Username"
+          name="username"
+        />
+
+        <InputField
+          errors={errors}
+          control={control}
+          text="Password"
+          name="password"
+          secure={true}
+        />
 
         <TouchableOpacity
           onPress={handleSubmit(onSubmit)}
@@ -151,25 +129,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 35,
   },
-  inputContainer: {
-    marginBottom: 16,
-  },
-  input: {
-    backgroundColor: theme.colorWhite,
-    height: 50,
-    width: 250,
-    borderColor: theme.colorBlack,
-    borderWidth: 2,
-    borderRadius: 25,
-    paddingLeft: 8,
-  },
-  inputText: {
-    fontSize: 19,
-  },
   buttonText: {
     fontSize: 19,
   },
-
   signIn: {
     alignSelf: "flex-end",
   },

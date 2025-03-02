@@ -1,5 +1,5 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import {
   Alert,
   StyleSheet,
@@ -8,16 +8,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useSignupMutation } from "../redux/apiSlice";
-import { theme } from "../theme";
-import { ErrorResponse, RootStackParamList } from "../utils/types";
-import { useFonts } from "expo-font";
+import { useSignupMutation } from "../../redux/apiSlice";
+import { theme } from "../../theme";
+import { ErrorResponse, RootStackParamList } from "../../utils/types";
+// import { useFonts } from "expo-font";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-import { SignUpSchema } from "../utils/validationSchema";
-import BottomLogo from "./BottomLogo";
-import * as SplashScreen from "expo-splash-screen";
+import BottomLogo from "../../components/BottomLogo";
+import { SignUpSchema } from "../../utils/validationSchema";
+import InputField from "./InputField";
 
 type SignUpScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -39,24 +39,6 @@ const SignUpScreen = ({ navigation }: Props) => {
 
   // if (!fontsLoaded) {
   //   return undefined;
-  // }
-  // const [appIsReady, setAppIsReady] = useState(false);
-
-  // useEffect(() => {
-  //   if (fontsLoaded) {
-  //     setAppIsReady(true);
-  //   }
-  // }, [fontsLoaded]);
-
-  // const onLayoutRootView = useCallback(async () => {
-  //   if (appIsReady) {
-  //     // Hide the splash screen once the app is ready
-  //     await SplashScreen.hideAsync();
-  //   }
-  // }, [appIsReady]);
-
-  // if (!appIsReady) {
-  //   return null; // Return null or a loading indicator while the app is not ready
   // }
 
   const {
@@ -90,7 +72,9 @@ const SignUpScreen = ({ navigation }: Props) => {
     <View style={styles.container}>
       <View>
         <Text style={[styles.heading, styles.text]}>Sign Up</Text>
-        <View style={styles.inputContainer}>
+
+        <InputField errors={errors} control={control} />
+        {/* <View style={styles.inputContainer}>
           <Text style={[styles.inputText, styles.text]}>First Name</Text>
           <Controller
             control={control}
@@ -105,7 +89,7 @@ const SignUpScreen = ({ navigation }: Props) => {
             )}
           />
           {errors.firstName && <Text>{errors.firstName?.message}</Text>}
-        </View>
+        </View> */}
 
         <View style={styles.inputContainer}>
           <Text style={[styles.inputText, styles.text]}>Username</Text>
@@ -175,7 +159,7 @@ const SignUpScreen = ({ navigation }: Props) => {
       </View>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate("Signin")}
+        onPress={() => navigation.goBack()}
         style={styles.signIn}
         activeOpacity={0.6}
       >
