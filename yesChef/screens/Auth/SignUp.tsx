@@ -11,13 +11,14 @@ import {
 import { useSignupMutation } from "../../redux/apiSlice";
 import { theme } from "../../theme";
 import { ErrorResponse, RootStackParamList } from "../../utils/types";
-// import { useFonts } from "expo-font";
+import { useFonts } from "expo-font";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import BottomLogo from "../../components/BottomLogo";
 import { SignUpSchema } from "../../utils/validationSchema";
-import InputField from "./InputField";
+import InputField from "./AuthInputField";
+import AuthSubmitButton from "./AuthSubmitButton";
 
 type SignUpScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -27,19 +28,17 @@ type SignUpScreenNavigationProp = NativeStackNavigationProp<
 type Props = { navigation: SignUpScreenNavigationProp };
 type SignUpFormData = z.infer<typeof SignUpSchema>;
 
-// SplashScreen.preventAutoHideAsync();
-
 const SignUpScreen = ({ navigation }: Props) => {
   const [signup, signinStatus] = useSignupMutation();
 
-  // const [fontsLoaded] = useFonts({
-  //   "InriaSerif-BoldItalic": require("../assets/fonts/InriaSerif-BoldItalic.ttf"),
-  //   "Italianno-Regular": require("../assets/fonts/Italianno-Regular.ttf"),
-  // });
+  //   const [fontsLoaded] = useFonts({
+  //     "InriaSerif-BoldItalic": require("../../assets/fonts/InriaSerif-BoldItalic.ttf"),
+  //     "Italianno-Regular": require("../../assets/fonts/Italianno-Regular.ttf"),
+  //   });
 
-  // if (!fontsLoaded) {
-  //   return undefined;
-  // }
+  //   if (!fontsLoaded) {
+  //     return undefined;
+  //   }
 
   const {
     control,
@@ -73,87 +72,41 @@ const SignUpScreen = ({ navigation }: Props) => {
       <View>
         <Text style={[styles.heading, styles.text]}>Sign Up</Text>
 
-        <InputField errors={errors} control={control} />
-        {/* <View style={styles.inputContainer}>
-          <Text style={[styles.inputText, styles.text]}>First Name</Text>
-          <Controller
-            control={control}
-            name="firstName"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                style={styles.input}
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-              />
-            )}
-          />
-          {errors.firstName && <Text>{errors.firstName?.message}</Text>}
-        </View> */}
+        <InputField
+          errors={errors}
+          control={control}
+          text="First Name"
+          name="firstName"
+        />
 
-        <View style={styles.inputContainer}>
-          <Text style={[styles.inputText, styles.text]}>Username</Text>
-          <Controller
-            control={control}
-            name="username"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                style={styles.input}
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-              />
-            )}
-          />
-          {errors.username && <Text>{errors.username?.message}</Text>}
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={[styles.inputText, styles.text]}>Password</Text>
-          <Controller
-            control={control}
-            name="password"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                style={styles.input}
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                secureTextEntry
-              />
-            )}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <Text style={[styles.inputText, styles.text]}>Confirm Password</Text>
-          <Controller
-            control={control}
-            name="confirmPassword"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                style={styles.input}
-                value={value}
-                onChangeText={onChange}
-                onBlur={onBlur}
-                secureTextEntry
-              />
-            )}
-          />
-          {errors.confirmPassword && (
-            <Text>{errors.confirmPassword?.message}</Text>
-          )}
-        </View>
-        <TouchableOpacity
-          onPress={handleSubmit(onSubmit)}
-          disabled={signinStatus.isLoading}
-          style={styles.signUp}
-          activeOpacity={0.6}
-        >
-          {signinStatus.isLoading ? (
-            <Text style={[styles.buttonText, styles.text]}>Signing Up...</Text>
-          ) : (
-            <Text style={[styles.buttonText, styles.text]}>Sign Up</Text>
-          )}
-        </TouchableOpacity>
+        <InputField
+          errors={errors}
+          control={control}
+          text="Username"
+          name="username"
+        />
+
+        <InputField
+          errors={errors}
+          control={control}
+          text="Password"
+          name="password"
+          secure={true}
+        />
+
+        <InputField
+          errors={errors}
+          control={control}
+          text="Confirm Password"
+          name="confirmPassword"
+        />
+
+        <AuthSubmitButton
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
+          isLoading={signinStatus.isLoading}
+          action="Up"
+        />
 
         <BottomLogo />
       </View>
@@ -187,21 +140,6 @@ const styles = StyleSheet.create({
     fontSize: 38,
     textAlign: "center",
     marginBottom: 35,
-  },
-  inputContainer: {
-    marginBottom: 16,
-  },
-  input: {
-    backgroundColor: theme.colorWhite,
-    height: 50,
-    width: 250,
-    borderColor: theme.colorBlack,
-    borderWidth: 2,
-    borderRadius: 25,
-    paddingLeft: 8,
-  },
-  inputText: {
-    fontSize: 19,
   },
   buttonText: {
     fontSize: 19,

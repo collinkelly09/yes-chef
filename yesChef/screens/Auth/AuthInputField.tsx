@@ -3,28 +3,62 @@ import React from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import { theme } from "../../theme";
 
-interface Props {
-  errors: FieldErrors<{
-    firstName?: string;
-    username?: string;
-    password?: string;
-    confirmPassword?: string;
-  }>;
-  control:
-    | Control<{
-        username: string;
-        password: string;
-      }>
-    | Control<{
+// interface Props {
+//   errors: FieldErrors<{
+//     firstName?: string;
+//     username?: string;
+//     password?: string;
+//     confirmPassword?: string;
+//   }>;
+//   control:
+//     | Control<{
+//         username: string;
+//         password: string;
+//       }>
+//     | Control<{
+//         firstName: string;
+//         username: string;
+//         password: string;
+//         confirmPassword: string;
+//       }>;
+//   text: string;
+//   name: SignUpEnum | SignInEnum;
+//   formType: "signIn" | "signUp";
+//   secure?: boolean;
+// }
+type Props =
+  | {
+      formType: "signUp";
+      errors: FieldErrors<{
+        firstName?: string;
+        username?: string;
+        password?: string;
+        confirmPassword?: string;
+      }>;
+      control: Control<{
         firstName: string;
         username: string;
         password: string;
         confirmPassword: string;
       }>;
-  text: string;
-  name: "username" | "password" | "firstName" | "confirmPassword";
-  secure?: boolean;
-}
+      text: string;
+      name: "firstName" | "username" | "password" | "confirmPassword";
+      secure?: boolean;
+    }
+  | {
+      formType: "signIn";
+      errors: FieldErrors<{
+        username?: string;
+        password?: string;
+      }>;
+      control: Control<{
+        username: string;
+        password: string;
+      }>;
+      text: string;
+      name: "username" | "password";
+      secure?: boolean;
+    };
 
 export default function InputField({
   errors,
@@ -32,6 +66,7 @@ export default function InputField({
   text,
   name,
   secure,
+  formType,
 }: Props) {
   const secureText = secure ?? false;
 
@@ -51,7 +86,7 @@ export default function InputField({
           />
         )}
       />
-      {errors.username && <Text>{errors.username?.message}</Text>}
+      {errors.username && <Text>{errors[name]?.message}</Text>}
     </View>
   );
 }

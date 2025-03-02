@@ -17,7 +17,8 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { SignInSchema } from "../../utils/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import InputField from "./InputField";
+import InputField from "./AuthInputField";
+import AuthSubmitButton from "./AuthSubmitButton";
 
 type SigninScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -84,18 +85,12 @@ const SignInScreen = ({ navigation }: Props) => {
           secure={true}
         />
 
-        <TouchableOpacity
-          onPress={handleSubmit(onSubmit)}
-          disabled={signinStatus.isLoading}
-          style={styles.signIn}
-          activeOpacity={0.6}
-        >
-          {signinStatus.isLoading ? (
-            <Text style={[styles.buttonText, styles.text]}>Signing In...</Text>
-          ) : (
-            <Text style={[styles.buttonText, styles.text]}>Sign In</Text>
-          )}
-        </TouchableOpacity>
+        <AuthSubmitButton
+          handleSubmit={handleSubmit}
+          onSubmit={onSubmit}
+          isLoading={signinStatus.isLoading}
+          action="In"
+        />
 
         <BottomLogo />
       </View>
