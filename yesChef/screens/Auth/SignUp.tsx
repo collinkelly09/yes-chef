@@ -91,6 +91,7 @@ const SignUpScreen = ({ navigation }: Props) => {
           control={control}
           text="Confirm Password"
           name="confirmPassword"
+          secure={true}
         />
 
         {/* <AuthSubmitButton

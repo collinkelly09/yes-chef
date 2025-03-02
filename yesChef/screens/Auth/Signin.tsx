@@ -92,9 +92,9 @@ const SignInScreen = ({ navigation }: Props) => {
           activeOpacity={0.6}
         >
           {signinStatus.isLoading ? (
-            <Text style={[styles.buttonText, styles.text]}>Signing Up...</Text>
+            <Text style={[styles.buttonText, styles.text]}>Signing In...</Text>
           ) : (
-            <Text style={[styles.buttonText, styles.text]}>Sign Up</Text>
+            <Text style={[styles.buttonText, styles.text]}>Sign In</Text>
           )}
         </TouchableOpacity>
 
