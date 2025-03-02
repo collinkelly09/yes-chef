@@ -1,24 +1,16 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
-import {
-  Alert,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { useForm } from "react-hook-form";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { z } from "zod";
+import BottomLogo from "../../components/BottomLogo";
 import { useSignupMutation } from "../../redux/apiSlice";
 import { theme } from "../../theme";
 import { ErrorResponse, RootStackParamList } from "../../utils/types";
-import { useFonts } from "expo-font";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { z } from "zod";
-import BottomLogo from "../../components/BottomLogo";
 import { SignUpSchema } from "../../utils/validationSchema";
-import InputField from "./AuthInputField";
-import AuthSubmitButton from "./AuthSubmitButton";
+import SignUpInputField from "./SignUpInputField";
+// import AuthSubmitButton from "./AuthSubmitButton";
 
 type SignUpScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -72,21 +64,21 @@ const SignUpScreen = ({ navigation }: Props) => {
       <View>
         <Text style={[styles.heading, styles.text]}>Sign Up</Text>
 
-        <InputField
+        <SignUpInputField
           errors={errors}
           control={control}
           text="First Name"
           name="firstName"
         />
 
-        <InputField
+        <SignUpInputField
           errors={errors}
           control={control}
           text="Username"
           name="username"
         />
 
-        <InputField
+        <SignUpInputField
           errors={errors}
           control={control}
           text="Password"
@@ -94,19 +86,32 @@ const SignUpScreen = ({ navigation }: Props) => {
           secure={true}
         />
 
-        <InputField
+        <SignUpInputField
           errors={errors}
           control={control}
           text="Confirm Password"
           name="confirmPassword"
         />
 
-        <AuthSubmitButton
+        {/* <AuthSubmitButton
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}
           isLoading={signinStatus.isLoading}
           action="Up"
-        />
+        /> */}
+
+        <TouchableOpacity
+          onPress={handleSubmit(onSubmit)}
+          disabled={signinStatus.isLoading}
+          style={styles.submit}
+          activeOpacity={0.6}
+        >
+          {signinStatus.isLoading ? (
+            <Text style={[styles.buttonText, styles.text]}>Signing Up...</Text>
+          ) : (
+            <Text style={[styles.buttonText, styles.text]}>Sign Up</Text>
+          )}
+        </TouchableOpacity>
 
         <BottomLogo />
       </View>
@@ -144,11 +149,10 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 19,
   },
-
-  signIn: {
+  submit: {
     alignSelf: "flex-end",
   },
-  signUp: {
+  signIn: {
     alignSelf: "flex-end",
   },
 });

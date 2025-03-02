@@ -1,24 +1,17 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Alert,
-  TouchableOpacity,
-} from "react-native";
-import { useSigninMutation } from "../../redux/apiSlice";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React from "react";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useSigninMutation } from "../../redux/apiSlice";
 import { theme } from "../../theme";
 import { ErrorResponse, RootStackParamList } from "../../utils/types";
-import { useFonts } from "expo-font";
-import BottomLogo from "../../components/BottomLogo";
-import { Controller, useForm } from "react-hook-form";
-import { z } from "zod";
-import { SignInSchema } from "../../utils/validationSchema";
+// import { useFonts } from "expo-font";
 import { zodResolver } from "@hookform/resolvers/zod";
-import InputField from "./AuthInputField";
-import AuthSubmitButton from "./AuthSubmitButton";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import BottomLogo from "../../components/BottomLogo";
+import { SignInSchema } from "../../utils/validationSchema";
+import SignInInputField from "./SignInInputField";
+// import AuthSubmitButton from "./AuthSubmitButton";
 
 type SigninScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -70,14 +63,14 @@ const SignInScreen = ({ navigation }: Props) => {
       <View>
         <Text style={[styles.heading, styles.text]}>Sign In</Text>
 
-        <InputField
+        <SignInInputField
           errors={errors}
           control={control}
           text="Username"
           name="username"
         />
 
-        <InputField
+        <SignInInputField
           errors={errors}
           control={control}
           text="Password"
@@ -85,18 +78,31 @@ const SignInScreen = ({ navigation }: Props) => {
           secure={true}
         />
 
-        <AuthSubmitButton
+        {/* <AuthSubmitButton
           handleSubmit={handleSubmit}
           onSubmit={onSubmit}
           isLoading={signinStatus.isLoading}
           action="In"
-        />
+        /> */}
+
+        <TouchableOpacity
+          onPress={handleSubmit(onSubmit)}
+          disabled={signinStatus.isLoading}
+          style={styles.submit}
+          activeOpacity={0.6}
+        >
+          {signinStatus.isLoading ? (
+            <Text style={[styles.buttonText, styles.text]}>Signing Up...</Text>
+          ) : (
+            <Text style={[styles.buttonText, styles.text]}>Sign Up</Text>
+          )}
+        </TouchableOpacity>
 
         <BottomLogo />
       </View>
       <TouchableOpacity
         onPress={() => navigation.navigate("Signup")}
-        style={styles.signIn}
+        style={styles.signUp}
         activeOpacity={0.6}
       >
         <Text style={[styles.buttonText, styles.text]}>Sign Up</Text>
@@ -127,11 +133,11 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 19,
   },
-  signIn: {
+  submit: {
     alignSelf: "flex-end",
   },
   signUp: {
-    justifyContent: "flex-end",
+    alignSelf: "flex-end",
   },
 });
 
