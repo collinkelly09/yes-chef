@@ -32,6 +32,7 @@ export interface RecipeResponse {
   name: string;
   rating: number;
   photo_url: string;
+  time: string;
   created_at: string;
   user_id: number;
   ingredients: IngredientResponse[];
@@ -43,6 +44,7 @@ export interface RecipeListResponse {
   name: string;
   rating: number;
   photo_url?: string;
+  time: string;
   created_at: string;
   user_id: number;
 }

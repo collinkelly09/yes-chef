@@ -24,7 +24,7 @@ class RecipeResponse(BaseModel):
     id: int
     name: str
     photo_url: str
-    rating: str
+    rating: int
     time: str
     created_at: datetime
     user_id: int

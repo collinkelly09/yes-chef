@@ -57,7 +57,9 @@ export const SignInSchema = z.object({
 
 export const recipeSchema = z.object({
   name: z.string().max(256, "Name too long"),
+  rating: z.number().min(1).max(5),
   photo_url: z.string().optional(),
+  time: z.string(),
 });
 
 export const ingredientSchema = z.object({
