@@ -9,6 +9,8 @@ import {
 import HomeCategoryCard from "./HomeCategoryCard";
 import RecentlyAddedList from "./RecentlyAddedList";
 import RecipeCardList from "../../components/RecipeCardList";
+import Loading from "../../components/Loading";
+import { theme } from "../../theme";
 
 const HomeScreen = () => {
   // const [fontsLoaded] = useFonts({
@@ -24,7 +26,7 @@ const HomeScreen = () => {
   const { data: categoryData, isLoading: categoryLoading } =
     useListCategoriesQuery();
 
-  // if (recipeLoading || categoryLoading) return <Loading />;
+  if (recipeLoading || categoryLoading) return <Loading />;
 
   return (
     <View style={styles.container}>
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   subheading: {
-    color: "#666666",
+    color: theme.colorGrey,
     fontFamily: "InriaSerif-BoldItalic",
     fontSize: 23,
     paddingBottom: 15,

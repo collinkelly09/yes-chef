@@ -16,8 +16,9 @@ export default function RecipeCard({ name, photo_url, rating }: RecipeItem) {
     <View style={styles.recipeCard}>
       <Image source={{ uri: photo_url }} style={styles.image} />
       <View>
-        <Text style={styles.text}>{name}</Text>
+        <Text style={styles.title}>{name}</Text>
         <Text style={styles.stars}>{starConversion(rating)}</Text>
+        <Text style={styles.time}>10 - 20 Minutes</Text>
       </View>
     </View>
   );
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     gap: 15,
     marginBottom: 10,
   },
-  text: {
+  title: {
     color: theme.colorBlack,
     fontFamily: "InriaSerif-BoldItalic",
     fontSize: 20,
@@ -50,5 +51,11 @@ const styles = StyleSheet.create({
   stars: {
     color: theme.colorOrange,
     fontSize: 17,
+    paddingBottom: 3,
+  },
+  time: {
+    color: theme.colorGrey,
+    fontFamily: "InriaSerif-BoldItalic",
+    fontSize: 16,
   },
 });

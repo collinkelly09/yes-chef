@@ -12,6 +12,7 @@ import CustomDrawerContent from "./screens/Menu/CustomDrawerContent";
 import CustomHeader from "./screens/Menu/CustomHeader";
 import LogoutButton from "./screens/Menu/LogoutButton";
 import { RootDrawerParamList, RootStackParamList } from "./utils/types";
+import Recipes from "./screens/Recipes/Recipes";
 
 export default function App() {
   const { data: user, isLoading: userLoading } = useGetUserQuery();
@@ -37,7 +38,7 @@ export default function App() {
           />
           <Drawer.Screen
             name="Recipes"
-            component={LogoutButton}
+            component={Recipes}
             options={{ header: (props) => <CustomHeader {...props} /> }}
           />
           <Drawer.Screen
