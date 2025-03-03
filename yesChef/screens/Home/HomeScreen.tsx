@@ -6,11 +6,11 @@ import {
   useListCategoriesQuery,
   useListRecipesQuery,
 } from "../../redux/apiSlice";
-import HomeCategoryCard from "./HomeCategoryCard";
 import RecentlyAddedList from "./RecentlyAddedList";
 import RecipeCardList from "../../components/RecipeCardList";
 import Loading from "../../components/Loading";
 import { theme } from "../../theme";
+import HomeCategoryList from "./HomeCategoryList";
 
 const HomeScreen = () => {
   // const [fontsLoaded] = useFonts({
@@ -40,7 +40,7 @@ const HomeScreen = () => {
       <View style={styles.section}>
         <Text style={styles.subheading}>Categories</Text>
         {categoryData && (
-          <HomeCategoryCard categories={categoryData.categories} />
+          <HomeCategoryList categories={categoryData.categories} />
         )}
       </View>
 
