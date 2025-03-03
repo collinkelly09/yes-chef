@@ -20,12 +20,12 @@ export default function Recipes() {
 const styles = StyleSheet.create({
   container: {
     height: Dimensions.get("window").height * 0.9,
-    marginTop: 100,
+    marginTop: theme.headerSpace,
     paddingLeft: 15,
   },
   heading: {
     color: theme.colorGrey,
-    fontFamily: "InriaSerif-BoldItalic",
+    fontFamily: theme.mainFont,
     fontSize: 23,
     paddingBottom: 15,
   },

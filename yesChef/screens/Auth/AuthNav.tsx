@@ -40,7 +40,7 @@ export default function AuthNav({ screen, navigation }: Props) {
 const styles = StyleSheet.create({
   text: {
     color: theme.colorBlack,
-    fontFamily: "InriaSerif-BoldItalic",
+    fontFamily: theme.mainFont,
   },
   buttonText: {
     fontSize: 19,

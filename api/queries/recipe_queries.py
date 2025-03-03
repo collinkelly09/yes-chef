@@ -25,6 +25,7 @@ class RecipeQueries:
                 photo_url=recipe_in.photo_url,
                 rating=recipe_in.rating,
                 user_id=user_id,
+                time=recipe_in.time,
             )
             session.add(recipe)
             session.commit()

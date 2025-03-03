@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: theme.colorBlack,
-    fontFamily: "InriaSerif-BoldItalic",
+    fontFamily: theme.mainFont,
     fontSize: 20,
   },
   stars: {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   time: {
     color: theme.colorGrey,
-    fontFamily: "InriaSerif-BoldItalic",
+    fontFamily: theme.mainFont,
     fontSize: 16,
   },
 });

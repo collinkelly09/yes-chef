@@ -53,7 +53,7 @@ const HomeScreen = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
+    marginTop: theme.headerSpace,
     paddingLeft: 15,
   },
   section: {
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   subheading: {
     color: theme.colorGrey,
-    fontFamily: "InriaSerif-BoldItalic",
+    fontFamily: theme.mainFont,
     fontSize: 23,
     paddingBottom: 15,
   },

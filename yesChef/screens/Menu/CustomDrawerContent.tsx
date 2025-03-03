@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: theme.colorBlack,
-    fontFamily: "InriaSerif-BoldItalic",
+    fontFamily: theme.mainFont,
     fontSize: 21,
   },
 });

@@ -13,6 +13,7 @@ class RecipeRequest(BaseModel):
     name: str
     photo_url: str
     rating: int
+    time: str
 
 
 class RecipeResponse(BaseModel):
@@ -23,7 +24,8 @@ class RecipeResponse(BaseModel):
     id: int
     name: str
     photo_url: str
-    rating: int
+    rating: str
+    time: str
     created_at: datetime
     user_id: int
     ingredients: List[IngredientResponse]
@@ -57,6 +59,7 @@ class RecipeListResponse(BaseModel):
     name: str
     photo_url: str
     rating: int
+    time: str
     created_at: datetime
     user_id: int
 

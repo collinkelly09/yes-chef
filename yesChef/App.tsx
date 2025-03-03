@@ -13,6 +13,7 @@ import CustomHeader from "./screens/Menu/CustomHeader";
 import LogoutButton from "./screens/Menu/LogoutButton";
 import { RootDrawerParamList, RootStackParamList } from "./utils/types";
 import Recipes from "./screens/Recipes/Recipes";
+import Categories from "./screens/Categories/Categories";
 
 export default function App() {
   const { data: user, isLoading: userLoading } = useGetUserQuery();
@@ -43,7 +44,7 @@ export default function App() {
           />
           <Drawer.Screen
             name="Categories"
-            component={HomeScreen}
+            component={Categories}
             options={{ header: (props) => <CustomHeader {...props} /> }}
           />
         </Drawer.Navigator>

@@ -39,6 +39,7 @@ class Recipe(Base):
     rating: Mapped[Optional[int]] = mapped_column(
         CheckConstraint("rating BETWEEN 1 AND 5", name="check_rating_range")
     )
+    time: Mapped[str] = mapped_column()
     created_at: Mapped[str] = mapped_column(
         TIMESTAMP, default=func.current_timestamp(), nullable=False
     )

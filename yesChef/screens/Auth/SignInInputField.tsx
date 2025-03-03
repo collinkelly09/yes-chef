@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   inputText: {
     color: theme.colorBlack,
-    fontFamily: "InriaSerif-BoldItalic",
+    fontFamily: theme.mainFont,
     fontSize: 19,
   },
 });
