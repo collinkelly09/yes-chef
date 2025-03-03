@@ -10,7 +10,7 @@ import { theme } from "../../theme";
 import { ErrorResponse, RootStackParamList } from "../../utils/types";
 import { SignUpSchema } from "../../utils/validationSchema";
 import SignUpInputField from "./SignUpInputField";
-// import AuthSubmitButton from "./AuthSubmitButton";
+import AuthNav from "./AuthNav";
 
 type SignUpScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -94,13 +94,6 @@ const SignUpScreen = ({ navigation }: Props) => {
           secure={true}
         />
 
-        {/* <AuthSubmitButton
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          isLoading={signinStatus.isLoading}
-          action="Up"
-        /> */}
-
         <TouchableOpacity
           onPress={handleSubmit(onSubmit)}
           disabled={signinStatus.isLoading}
@@ -117,13 +110,7 @@ const SignUpScreen = ({ navigation }: Props) => {
         <BottomLogo />
       </View>
 
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={styles.signIn}
-        activeOpacity={0.6}
-      >
-        <Text style={[styles.buttonText, styles.text]}>Sign In</Text>
-      </TouchableOpacity>
+      <AuthNav navigation={navigation} screen="signup" />
     </View>
   );
 };

@@ -1,22 +1,27 @@
 import {
-  createDrawerNavigator,
   DrawerContentComponentProps,
   DrawerContentScrollView,
-  DrawerItemList,
 } from "@react-navigation/drawer";
-import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import LogoutButton from "./LogoutButton";
 import { theme } from "../../theme";
 import MenuButton from "./MenuButton";
+import { UserResponse } from "../../utils/types";
 
-export default function CustomDrawerContent(
-  props: DrawerContentComponentProps
-) {
+interface CustomDrawerContentProps extends DrawerContentComponentProps {
+  user: UserResponse;
+}
+
+export default function CustomDrawerContent({
+  user,
+  ...props
+}: CustomDrawerContentProps) {
   return (
     <DrawerContentScrollView
       {...props}
       contentContainerStyle={styles.container}
     >
+      <Text style={styles.hi}>Hi {user.name}</Text>
       <View style={styles.buttonList}>
         <MenuButton props={props} name="Home" />
         <MenuButton props={props} name="Recipes" />
@@ -29,11 +34,18 @@ export default function CustomDrawerContent(
 }
 
 const styles = StyleSheet.create({
+  hi: {
+    fontFamily: "Italianno-Regular",
+    fontSize: 65,
+    color: theme.colorOrange,
+    marginTop: 10,
+    textDecorationLine: "underline",
+  },
   container: {
     flex: 1,
   },
   buttonList: {
-    marginTop: 15,
+    paddingLeft: 15,
     gap: 5,
   },
   logout: {

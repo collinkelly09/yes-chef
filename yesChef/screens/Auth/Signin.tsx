@@ -11,7 +11,7 @@ import { z } from "zod";
 import BottomLogo from "../../components/BottomLogo";
 import { SignInSchema } from "../../utils/validationSchema";
 import SignInInputField from "./SignInInputField";
-// import AuthSubmitButton from "./AuthSubmitButton";
+import AuthNav from "./AuthNav";
 
 type SigninScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -25,8 +25,8 @@ const SignInScreen = ({ navigation }: Props) => {
   const [signin, signinStatus] = useSigninMutation();
 
   // const [fontsLoaded] = useFonts({
-  //   "InriaSerif-BoldItalic": require("../assets/fonts/InriaSerif-BoldItalic.ttf"),
-  //   "Italianno-Regular": require("../assets/fonts/Italianno-Regular.ttf"),
+  //   "InriaSerif-BoldItalic": require("../../assets/fonts/InriaSerif-BoldItalic.ttf"),
+  //   "Italianno-Regular": require("../../assets/fonts/Italianno-Regular.ttf"),
   // });
 
   // if (!fontsLoaded) {
@@ -78,13 +78,6 @@ const SignInScreen = ({ navigation }: Props) => {
           secure={true}
         />
 
-        {/* <AuthSubmitButton
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          isLoading={signinStatus.isLoading}
-          action="In"
-        /> */}
-
         <TouchableOpacity
           onPress={handleSubmit(onSubmit)}
           disabled={signinStatus.isLoading}
@@ -100,13 +93,8 @@ const SignInScreen = ({ navigation }: Props) => {
 
         <BottomLogo />
       </View>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Signup")}
-        style={styles.signUp}
-        activeOpacity={0.6}
-      >
-        <Text style={[styles.buttonText, styles.text]}>Sign Up</Text>
-      </TouchableOpacity>
+
+      <AuthNav navigation={navigation} screen="signin" />
     </View>
   );
 };

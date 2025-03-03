@@ -26,7 +26,9 @@ export default function App() {
       <StatusBar style="auto" />
       {user ? (
         <Drawer.Navigator
-          drawerContent={(props) => <CustomDrawerContent {...props} />}
+          drawerContent={(props) => (
+            <CustomDrawerContent user={user} {...props} />
+          )}
         >
           <Drawer.Screen
             name="Home"
