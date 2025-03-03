@@ -70,6 +70,7 @@ class RecipeQueries:
                     name=recipe_in.name,
                     photo_url=recipe_in.photo_url,
                     rating=recipe_in.rating,
+                    time=recipe_in.time,
                 )
             )
             result = session.execute(stmt)

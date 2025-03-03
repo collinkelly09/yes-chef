@@ -15,6 +15,7 @@ export default function RecipeCardList({ recipes }: RecipeResponseList) {
           rating={item.rating}
           name={item.name}
           id={item.id}
+          time={item.time}
         />
       )}
       showsVerticalScrollIndicator={false}
