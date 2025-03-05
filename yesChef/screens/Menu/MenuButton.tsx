@@ -12,7 +12,9 @@ export default function MenuButton({ props, name }: Props) {
   return (
     <View>
       <TouchableOpacity
-        onPress={() => props.navigation.navigate(name)}
+        onPress={() =>
+          props.navigation.navigate(name === "Home" ? "Main" : name)
+        }
         activeOpacity={0.6}
       >
         <Text style={[styles.text]}>{name}</Text>
@@ -24,7 +26,7 @@ export default function MenuButton({ props, name }: Props) {
 const styles = StyleSheet.create({
   text: {
     color: theme.colorBlack,
-    fontFamily: theme.mainFont,
+    fontFamily: "InriaSerif-BoldItalic",
     fontSize: 21,
   },
 });

@@ -13,7 +13,6 @@ import CustomHeader from "./screens/Menu/CustomHeader";
 import LogoutButton from "./screens/Menu/LogoutButton";
 import { RootDrawerParamList, RootStackParamList } from "./utils/types";
 import Recipes from "./screens/Recipes/Recipes";
-import Categories from "./screens/Categories/Categories";
 
 export default function App() {
   const { data: user, isLoading: userLoading } = useGetUserQuery();
@@ -23,18 +22,34 @@ export default function App() {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
+  const MyStack = () => (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Recipes"
+        component={Recipes}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+
   return (
     <NavigationContainer>
       <StatusBar style="auto" />
       {user ? (
         <Drawer.Navigator
+          initialRouteName="Main"
           drawerContent={(props) => (
             <CustomDrawerContent user={user} {...props} />
           )}
         >
           <Drawer.Screen
-            name="Home"
-            component={HomeScreen}
+            name="Main"
+            component={MyStack}
             options={{ header: (props) => <CustomHeader {...props} /> }}
           />
           <Drawer.Screen
@@ -42,26 +57,19 @@ export default function App() {
             component={Recipes}
             options={{ header: (props) => <CustomHeader {...props} /> }}
           />
-          <Drawer.Screen
-            name="Categories"
-            component={Categories}
-            options={{ header: (props) => <CustomHeader {...props} /> }}
-          />
         </Drawer.Navigator>
       ) : (
         <Stack.Navigator>
-          <>
-            <Stack.Screen
-              name="Signin"
-              component={SignInScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Signup"
-              component={SignUpScreen}
-              options={{ headerShown: false }}
-            />
-          </>
+          <Stack.Screen
+            name="Signin"
+            component={SignInScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={SignUpScreen}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       )}
     </NavigationContainer>

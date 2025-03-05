@@ -1,7 +1,13 @@
 import React from "react";
 // import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 // import { DrawerNavigationProp } from "@react-navigation/drawer";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import {
   useListCategoriesQuery,
   useListRecipesQuery,
@@ -11,8 +17,17 @@ import RecipeCardList from "../../components/RecipeCardList";
 import Loading from "../../components/Loading";
 import { theme } from "../../theme";
 import HomeCategoryList from "./HomeCategoryList";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../utils/types";
 
-const HomeScreen = () => {
+export type HomeScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Home"
+>;
+
+type Props = { navigation: HomeScreenNavigationProp };
+
+const HomeScreen = ({ navigation }: Props) => {
   // const [fontsLoaded] = useFonts({
   //   "InriaSerif-BoldItalic": require("../assets/fonts/InriaSerif-BoldItalic.ttf"),
   //   "Italianno-Regular": require("../assets/fonts/Italianno-Regular.ttf"),
@@ -33,7 +48,10 @@ const HomeScreen = () => {
       <View style={styles.section}>
         <Text style={styles.subheading}>Recently Added</Text>
         {recipeData && (
-          <RecentlyAddedList recipes={recipeData.recipes.slice(0, 10)} />
+          <RecentlyAddedList
+            recipes={recipeData.recipes.slice(0, 10)}
+            navigation={navigation}
+          />
         )}
       </View>
 

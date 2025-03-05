@@ -97,8 +97,12 @@ export interface ErrorResponse {
 
 // Root Stack Param
 export type RootStackParamList = {
+  Home: undefined;
   Signin: undefined;
   Signup: undefined;
+  Category: { categoryId: number };
+  Recipes: undefined;
+  Recipe: { recipeId: number };
 };
 
 // Root Drawer Param
@@ -106,4 +110,5 @@ export type RootDrawerParamList = {
   Home: undefined;
   Recipes: undefined;
   Categories: undefined;
+  Main: undefined;
 };

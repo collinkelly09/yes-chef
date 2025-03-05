@@ -1,13 +1,17 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { theme } from "../../theme";
 import { starConversion } from "../../utils/conversion";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../utils/types";
+import { HomeScreenNavigationProp } from "./HomeScreen";
 
-interface RecentlyAddedRecipe {
+interface RecentlyAddedRecipeProps {
   id: number;
   name: string;
   photo_url: string | undefined;
   rating: number;
+  navigation: HomeScreenNavigationProp;
 }
 
 export default function RecentlyAddedRecipe({
@@ -15,15 +19,18 @@ export default function RecentlyAddedRecipe({
   photo_url,
   id,
   rating,
-}: RecentlyAddedRecipe) {
+  navigation,
+}: RecentlyAddedRecipeProps) {
   return (
-    <View style={styles.recipeCard}>
-      <Image source={{ uri: photo_url }} style={styles.image} />
-      <Text style={styles.text} ellipsizeMode="tail" numberOfLines={1}>
-        {name}
-      </Text>
-      <Text style={styles.stars}>{starConversion(rating)}</Text>
-    </View>
+    <TouchableOpacity onPress={() => navigation.navigate("Recipes")}>
+      <View style={styles.recipeCard}>
+        <Image source={{ uri: photo_url }} style={styles.image} />
+        <Text style={styles.text} ellipsizeMode="tail" numberOfLines={1}>
+          {name}
+        </Text>
+        <Text style={styles.stars}>{starConversion(rating)}</Text>
+      </View>
+    </TouchableOpacity>
   );
 }
 

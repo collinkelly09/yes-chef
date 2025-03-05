@@ -1,18 +1,28 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { CategoryResponseList } from "../../utils/types";
+import { CategoryResponseList, RootStackParamList } from "../../utils/types";
 import { theme } from "../../theme";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { DrawerContentComponentProps } from "@react-navigation/drawer";
 
-export default function HomeCategoryCard({
-  name,
-  id,
-}: {
+type CategoryNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Category"
+>;
+
+interface Props extends DrawerContentComponentProps {
   name: string;
   id: number;
-}) {
+}
+
+export default function HomeCategoryCard({ navigation, name, id }: Props) {
   return (
     <View style={styles.categoryCard}>
-      <Text style={styles.text}>{name}</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Category", { categoryId: id })}
+      >
+        <Text style={styles.text}>{name}</Text>
+      </TouchableOpacity>
     </View>
   );
 }

@@ -1,9 +1,20 @@
 import React from "react";
 import { FlatList, View } from "react-native";
-import { RecipeResponseList } from "../../utils/types";
+import {
+  RecipeListResponse,
+  RecipeResponseList,
+  RootStackParamList,
+} from "../../utils/types";
 import RecentlyAddedRecipe from "./RecentlyAddedRecipe";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { HomeScreenNavigationProp } from "./HomeScreen";
 
-export default function HomeRecentlyAddedList({ recipes }: RecipeResponseList) {
+type Props = {
+  navigation: HomeScreenNavigationProp;
+  recipes: RecipeListResponse[];
+};
+
+export default function HomeRecentlyAddedList({ recipes, navigation }: Props) {
   return (
     <View>
       <FlatList
@@ -15,6 +26,7 @@ export default function HomeRecentlyAddedList({ recipes }: RecipeResponseList) {
             id={item.id}
             photo_url={item.photo_url}
             rating={item.rating}
+            navigation={navigation}
           />
         )}
         horizontal

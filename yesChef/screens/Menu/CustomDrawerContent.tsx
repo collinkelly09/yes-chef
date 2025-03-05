@@ -25,7 +25,6 @@ export default function CustomDrawerContent({
       <View style={styles.buttonList}>
         <MenuButton props={props} name="Home" />
         <MenuButton props={props} name="Recipes" />
-        <MenuButton props={props} name="Categories" />
       </View>
 
       <LogoutButton {...props} styles={styles.logout} />
