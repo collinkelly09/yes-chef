@@ -20,7 +20,9 @@ export default function RecentlyAddedRecipe({
   navigation,
 }: RecentlyAddedRecipeProps) {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Recipes")}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Recipe", { recipeId: id })}
+    >
       <View style={styles.recipeCard}>
         <Image source={{ uri: photo_url }} style={styles.image} />
         <Text style={styles.text} ellipsizeMode="tail" numberOfLines={1}>

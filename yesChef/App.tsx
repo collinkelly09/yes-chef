@@ -13,6 +13,7 @@ import CustomHeader from "./screens/Menu/CustomHeader";
 import LogoutButton from "./screens/Menu/LogoutButton";
 import { RootDrawerParamList, RootStackParamList } from "./utils/types";
 import Recipes from "./screens/Recipes/Recipes";
+import RecipePage from "./screens/Recipes/RecipePage";
 
 export default function App() {
   const { data: user, isLoading: userLoading } = useGetUserQuery();
@@ -32,6 +33,11 @@ export default function App() {
       <Stack.Screen
         name="Recipes"
         component={Recipes}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Recipe"
+        component={RecipePage}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
