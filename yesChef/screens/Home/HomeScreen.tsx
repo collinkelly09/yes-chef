@@ -18,12 +18,10 @@ import Loading from "../../components/Loading";
 import { theme } from "../../theme";
 import HomeCategoryList from "./HomeCategoryList";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../utils/types";
-
-export type HomeScreenNavigationProp = NativeStackNavigationProp<
+import {
+  HomeScreenNavigationProp,
   RootStackParamList,
-  "Home"
->;
+} from "../../utils/types";
 
 type Props = { navigation: HomeScreenNavigationProp };
 

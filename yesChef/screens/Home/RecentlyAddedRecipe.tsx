@@ -2,9 +2,7 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { theme } from "../../theme";
 import { starConversion } from "../../utils/conversion";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../utils/types";
-import { HomeScreenNavigationProp } from "./HomeScreen";
+import { HomeScreenNavigationProp } from "../../utils/types";
 
 interface RecentlyAddedRecipeProps {
   id: number;

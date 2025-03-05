@@ -2,12 +2,9 @@ import React from "react";
 import { FlatList, View } from "react-native";
 import {
   RecipeListResponse,
-  RecipeResponseList,
-  RootStackParamList,
+  HomeScreenNavigationProp,
 } from "../../utils/types";
 import RecentlyAddedRecipe from "./RecentlyAddedRecipe";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { HomeScreenNavigationProp } from "./HomeScreen";
 
 type Props = {
   navigation: HomeScreenNavigationProp;

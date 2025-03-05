@@ -5,6 +5,7 @@ import {
   recipeSchema,
   stepSchema,
 } from "./validationSchema";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 // Auth Types
 export interface SignUpRequest {
@@ -112,3 +113,10 @@ export type RootDrawerParamList = {
   Categories: undefined;
   Main: undefined;
 };
+
+// Navigation Prop Types
+
+export type HomeScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Home"
+>;
