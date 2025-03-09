@@ -1,20 +1,14 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { NativeNavigationProp } from "@react-navigation/native-stack";
 import { z } from "zod";
-import { RootStackParamList } from "../../utils/types";
+import { RootParamList } from "../../utils/types";
 import { SignUpSchema } from "../../utils/validationSchema";
 import { theme } from "../../theme";
 
-type SignUpScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Signup"
->;
+type SignUpScreenNavigationProp = NativeNavigationProp<RootParamList, "Signup">;
 
-type SignInScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Signin"
->;
+type SignInScreenNavigationProp = NativeNavigationProp<RootParamList, "Signin">;
 
 type Props = {
   screen: "signup" | "signin";

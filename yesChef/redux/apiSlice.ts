@@ -65,10 +65,7 @@ export const recipeApi = createApi({
     }),
 
     // Recipe Queries and Mutations
-    getRecipeDetails: builder.query<
-      RecipeResponse | ErrorResponse,
-      { recipeId: number }
-    >({
+    getRecipeDetails: builder.query<RecipeResponse, { recipeId: number }>({
       query: ({ recipeId }) => ({
         url: `/api/recipes/${recipeId}`,
       }),

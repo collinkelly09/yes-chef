@@ -17,7 +17,7 @@ import RecipeCardList from "../../components/RecipeCardList";
 import Loading from "../../components/Loading";
 import { theme } from "../../theme";
 import HomeCategoryList from "./HomeCategoryList";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
 import {
   HomeScreenNavigationProp,
   RootStackParamList,

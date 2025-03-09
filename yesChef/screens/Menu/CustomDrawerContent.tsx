@@ -2,11 +2,11 @@ import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
-import { View, Text, StyleSheet } from "react-native";
-import LogoutButton from "./LogoutButton";
+import { StyleSheet, Text, View } from "react-native";
 import { theme } from "../../theme";
-import MenuButton from "./MenuButton";
 import { UserResponse } from "../../utils/types";
+import LogoutButton from "./LogoutButton";
+import MenuButton from "./MenuButton";
 
 interface CustomDrawerContentProps extends DrawerContentComponentProps {
   user: UserResponse;
@@ -23,8 +23,8 @@ export default function CustomDrawerContent({
     >
       <Text style={styles.hi}>Hi {user.name}</Text>
       <View style={styles.buttonList}>
-        <MenuButton props={props} name="Home" />
-        <MenuButton props={props} name="Recipes" />
+        <MenuButton props={props} pageName="Main" />
+        <MenuButton props={props} pageName="Recipes" />
       </View>
 
       <LogoutButton {...props} styles={styles.logout} />

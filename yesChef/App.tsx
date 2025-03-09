@@ -4,16 +4,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { Text } from "react-native";
+import { useGetUserQuery } from "./redux/apiSlice";
 import SignInScreen from "./screens/Auth/Signin";
 import SignUpScreen from "./screens/Auth/SignUp";
-import { useGetUserQuery } from "./redux/apiSlice";
 import HomeScreen from "./screens/Home/HomeScreen";
 import CustomDrawerContent from "./screens/Menu/CustomDrawerContent";
 import CustomHeader from "./screens/Menu/CustomHeader";
-import LogoutButton from "./screens/Menu/LogoutButton";
-import { RootDrawerParamList, RootStackParamList } from "./utils/types";
-import Recipes from "./screens/Recipes/Recipes";
 import RecipePage from "./screens/Recipes/RecipePage";
+import Recipes from "./screens/Recipes/Recipes";
+import { RootDrawerParamList, RootStackParamList } from "./utils/types";
 
 export default function App() {
   const { data: user, isLoading: userLoading } = useGetUserQuery();
@@ -24,7 +23,7 @@ export default function App() {
   const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
   const MyStack = () => (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Home"
         component={HomeScreen}
