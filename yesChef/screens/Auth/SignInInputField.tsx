@@ -1,5 +1,5 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
+import { Keyboard, StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useRef } from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import { theme } from "../../theme";
 
@@ -37,8 +37,8 @@ export default function SignInInputField({
             style={styles.input}
             value={value}
             onChangeText={onChange}
-            onBlur={onBlur}
             secureTextEntry={secureText}
+            onBlur={onBlur}
           />
         )}
       />

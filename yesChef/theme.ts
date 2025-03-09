@@ -4,5 +4,5 @@ export const theme = {
   colorOrange: "#FF9D00",
   colorGrey: "#666666",
   headerSpace: 100,
-  mainFont: "InriaSerif-BoldItalic",
+  mainFont: "JacquesFrancois-Regular",
 };

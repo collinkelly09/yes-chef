@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     flex: 1,
     justifyContent: "flex-end",
+    position: "relative",
     paddingLeft: 18,
   },
   logo: {

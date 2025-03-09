@@ -14,7 +14,6 @@ type RecipePageProps = {
 
 export default function RecipePage({ route }: RecipePageProps) {
   const { recipeId } = route.params;
-
   const { data: recipeData, isLoading: recipeLoading } =
     useGetRecipeDetailsQuery({ recipeId });
 

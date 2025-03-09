@@ -11,6 +11,7 @@ import { ErrorResponse, RootStackParamList } from "../../utils/types";
 import { SignUpSchema } from "../../utils/validationSchema";
 import SignUpInputField from "./SignUpInputField";
 import AuthNav from "./AuthNav";
+// import { useFonts } from "expo-font";
 
 type SignUpScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -23,14 +24,14 @@ type SignUpFormData = z.infer<typeof SignUpSchema>;
 const SignUpScreen = ({ navigation }: Props) => {
   const [signup, signinStatus] = useSignupMutation();
 
-  //   const [fontsLoaded] = useFonts({
-  //     "InriaSerif-BoldItalic": require("../../assets/fonts/InriaSerif-BoldItalic.ttf"),
-  //     "Italianno-Regular": require("../../assets/fonts/Italianno-Regular.ttf"),
-  //   });
+  // const [fontsLoaded] = useFonts({
+  //   "InriaSerif-BoldItalic": require("../../assets/fonts/InriaSerif-BoldItalic.ttf"),
+  //   "Italianno-Regular": require("../../assets/fonts/Italianno-Regular.ttf"),
+  // });
 
-  //   if (!fontsLoaded) {
-  //     return undefined;
-  //   }
+  // if (!fontsLoaded) {
+  //   return undefined;
+  // }
 
   const {
     control,
@@ -110,7 +111,7 @@ const SignUpScreen = ({ navigation }: Props) => {
         <BottomLogo />
       </View>
 
-      <AuthNav navigation={navigation} screen="signup" />
+      <AuthNav navigation={navigation} screen="signup" location="Sign In" />
     </View>
   );
 };
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: theme.colorBlack,
-    fontFamily: "InriaSerif-BoldItalic",
+    fontFamily: theme.mainFont,
   },
   heading: {
     fontSize: 38,

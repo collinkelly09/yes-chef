@@ -23,7 +23,7 @@ export default function CustomHeader({ navigation }: DrawerHeaderProps) {
 
 const styles = StyleSheet.create({
   menuButton: {
-    paddingTop: 45,
+    paddingTop: 60,
     paddingLeft: 20,
   },
   barType1: {

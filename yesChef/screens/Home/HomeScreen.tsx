@@ -1,13 +1,6 @@
 import React from "react";
-// import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-// import { DrawerNavigationProp } from "@react-navigation/drawer";
-import {
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import {
   useListCategoriesQuery,
   useListRecipesQuery,
@@ -18,17 +11,15 @@ import Loading from "../../components/Loading";
 import { theme } from "../../theme";
 import HomeCategoryList from "./HomeCategoryList";
 
-import {
-  HomeScreenNavigationProp,
-  RootStackParamList,
-} from "../../utils/types";
+import { HomeScreenNavigationProp } from "../../utils/types";
+// import { useFonts } from "expo-font";
 
 type Props = { navigation: HomeScreenNavigationProp };
 
 const HomeScreen = ({ navigation }: Props) => {
   // const [fontsLoaded] = useFonts({
-  //   "InriaSerif-BoldItalic": require("../assets/fonts/InriaSerif-BoldItalic.ttf"),
-  //   "Italianno-Regular": require("../assets/fonts/Italianno-Regular.ttf"),
+  //   "JacquesFrancois-Regular": require("../../assets/fonts/JacquesFrancois-Regular.ttf"),
+  //   "Italianno-Regular": require("../../assets/fonts/Italianno-Regular.ttf"),
   // });
 
   // if (!fontsLoaded) {
