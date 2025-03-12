@@ -4,15 +4,22 @@ import RecipeCardList from "../../components/RecipeCardList";
 import { useListRecipesQuery } from "../../redux/apiSlice";
 import Loading from "../../components/Loading";
 import { theme } from "../../theme";
+import { RecipesScreenNavigationProp } from "../../utils/types";
 
-export default function Recipes() {
+export default function Recipes({
+  navigation,
+}: {
+  navigation: RecipesScreenNavigationProp;
+}) {
   const { data: recipeData, isLoading: recipeLoading } = useListRecipesQuery();
   if (recipeLoading) return <Loading />;
 
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Recipes</Text>
-      {recipeData && <RecipeCardList recipes={recipeData.recipes} />}
+      {recipeData && (
+        <RecipeCardList recipes={recipeData.recipes} navigation={navigation} />
+      )}
     </View>
   );
 }

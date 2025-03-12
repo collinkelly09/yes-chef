@@ -53,7 +53,12 @@ const HomeScreen = ({ navigation }: Props) => {
 
       <View style={styles.favorites}>
         <Text style={styles.subheading}>Favorites</Text>
-        {recipeData && <RecipeCardList recipes={recipeData.recipes} />}
+        {recipeData && (
+          <RecipeCardList
+            recipes={recipeData.recipes}
+            navigation={navigation}
+          />
+        )}
       </View>
     </View>
   );

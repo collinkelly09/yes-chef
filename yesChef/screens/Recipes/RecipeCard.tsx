@@ -1,6 +1,10 @@
-import { View, Image, Text, StyleSheet } from "react-native";
+import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { theme } from "../../theme";
 import { starConversion } from "../../utils/conversion";
+import {
+  HomeScreenNavigationProp,
+  RecipesScreenNavigationProp,
+} from "../../utils/types";
 
 interface RecipeItem {
   id: number;
@@ -8,6 +12,7 @@ interface RecipeItem {
   photo_url: string | undefined;
   rating: number;
   time: string;
+  navigation: HomeScreenNavigationProp | RecipesScreenNavigationProp;
 }
 
 export default function RecipeCard({
@@ -16,16 +21,21 @@ export default function RecipeCard({
   rating,
   time,
   id,
+  navigation,
 }: RecipeItem) {
   return (
-    <View style={styles.recipeCard}>
-      <Image source={{ uri: photo_url }} style={styles.image} />
-      <View>
-        <Text style={styles.title}>{name}</Text>
-        <Text style={styles.stars}>{starConversion(rating)}</Text>
-        <Text style={styles.time}>{time}</Text>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Recipe", { recipeId: id })}
+    >
+      <View style={styles.recipeCard}>
+        <Image source={{ uri: photo_url }} style={styles.image} />
+        <View>
+          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.stars}>{starConversion(rating)}</Text>
+          <Text style={styles.time}>{time}</Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

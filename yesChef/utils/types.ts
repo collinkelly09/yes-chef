@@ -120,3 +120,8 @@ export type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "Home"
 >;
+
+export type RecipesScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Recipes"
+>;

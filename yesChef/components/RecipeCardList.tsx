@@ -1,9 +1,17 @@
 import React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import RecipeCard from "../screens/Recipes/RecipeCard";
-import { RecipeResponseList } from "../utils/types";
+import {
+  HomeScreenNavigationProp,
+  RecipeResponseList,
+  RecipesScreenNavigationProp,
+} from "../utils/types";
 
-export default function RecipeCardList({ recipes }: RecipeResponseList) {
+interface Props extends RecipeResponseList {
+  navigation: HomeScreenNavigationProp | RecipesScreenNavigationProp;
+}
+
+export default function RecipeCardList({ recipes, navigation }: Props) {
   return (
     <FlatList
       style={styles.flatList}
@@ -16,6 +24,7 @@ export default function RecipeCardList({ recipes }: RecipeResponseList) {
           name={item.name}
           id={item.id}
           time={item.time}
+          navigation={navigation}
         />
       )}
       showsVerticalScrollIndicator={false}
