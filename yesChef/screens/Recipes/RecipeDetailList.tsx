@@ -17,18 +17,24 @@ export default function RecipeDetailList({ dataList, type }: Props) {
 
   return (
     <View>
-      <Text style={[styles.text, styles.listHeader]}>{type}</Text>
-      {dataList.map((data, index) => (
-        <View style={styles.list} key={index}>
-          <Text style={[styles.itemMarker, styles.listText, styles.text]}>
-            {type === "Ingredients" ? "\u2022" : `${index + 1}.`}
-          </Text>
+      {dataList.length > 0 && (
+        <View>
+          <Text style={[styles.text, styles.listHeader]}>{type}</Text>
+          {dataList.map((data, index) => (
+            <View style={styles.list} key={index}>
+              <Text style={[styles.itemMarker, styles.listText, styles.text]}>
+                {type === "Ingredients" ? "\u2022" : `${index + 1}.`}
+              </Text>
 
-          <Text style={[styles.text, styles.listText]}>
-            {isIngredient(data) ? `${data.quantity} ${data.name}` : data.name}
-          </Text>
+              <Text style={[styles.text, styles.listText]}>
+                {isIngredient(data)
+                  ? `${data.quantity} ${data.name}`
+                  : data.name}
+              </Text>
+            </View>
+          ))}
         </View>
-      ))}
+      )}
     </View>
   );
 }
