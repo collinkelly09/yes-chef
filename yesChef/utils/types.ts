@@ -108,10 +108,9 @@ export type RootStackParamList = {
 
 // Root Drawer Param
 export type RootDrawerParamList = {
-  Home: undefined;
-  Recipes: undefined;
   Categories: undefined;
-  Main: undefined;
+  HomeStack: undefined;
+  RecipeStack: undefined;
 };
 
 // Navigation Prop Types

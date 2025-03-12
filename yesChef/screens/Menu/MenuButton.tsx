@@ -11,9 +11,14 @@ interface Props {
 }
 
 export default function MenuButton({ props, pageName }: Props) {
+  const buttons: Record<string, any> = {
+    HomeStack: "Home",
+    RecipeStack: "Recipes",
+  };
+
   // Todo REFACTOR ONCE MORE STACKS ARE ADDED
   const handleNavigation = (page: string) => {
-    if (page === "Main") {
+    if (page === "HomeStack") {
       props.navigation.navigate(page);
 
       // Todo Type 'string' is not assignable to type 'never'
@@ -32,9 +37,7 @@ export default function MenuButton({ props, pageName }: Props) {
         onPress={() => handleNavigation(pageName)}
         activeOpacity={0.6}
       >
-        <Text style={[styles.text]}>
-          {pageName === "Main" ? "Home" : pageName}
-        </Text>
+        <Text style={[styles.text]}>{buttons[pageName]}</Text>
       </TouchableOpacity>
     </View>
   );

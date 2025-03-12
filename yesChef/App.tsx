@@ -22,7 +22,7 @@ export default function App() {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
-  const MyStack = () => (
+  const HomeStack = () => (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Home"
@@ -42,24 +42,39 @@ export default function App() {
     </Stack.Navigator>
   );
 
+  const RecipeStack = () => (
+    <Stack.Navigator initialRouteName="Recipes">
+      <Stack.Screen
+        name="Recipes"
+        component={Recipes}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Recipe"
+        component={RecipePage}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+
   return (
     <NavigationContainer>
       <StatusBar style="auto" />
       {user ? (
         <Drawer.Navigator
-          initialRouteName="Main"
+          initialRouteName="HomeStack"
           drawerContent={(props) => (
             <CustomDrawerContent user={user} {...props} />
           )}
         >
           <Drawer.Screen
-            name="Main"
-            component={MyStack}
+            name="HomeStack"
+            component={HomeStack}
             options={{ header: (props) => <CustomHeader {...props} /> }}
           />
           <Drawer.Screen
-            name="Recipes"
-            component={Recipes}
+            name="RecipeStack"
+            component={RecipeStack}
             options={{ header: (props) => <CustomHeader {...props} /> }}
           />
         </Drawer.Navigator>
