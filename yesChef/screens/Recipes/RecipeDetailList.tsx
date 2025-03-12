@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { theme } from "../../theme";
 import { IngredientResponse, StepResponse } from "../../utils/types";
@@ -20,7 +20,7 @@ export default function RecipeDetailList({ dataList, type }: Props) {
       <Text style={[styles.text, styles.listHeader]}>{type}</Text>
       {dataList.map((data, index) => (
         <View style={styles.list} key={index}>
-          <Text style={[{ paddingRight: 8 }, styles.listText]}>
+          <Text style={[styles.itemMarker, styles.listText, styles.text]}>
             {type === "Ingredients" ? "\u2022" : `${index + 1}.`}
           </Text>
 
@@ -43,9 +43,15 @@ const styles = StyleSheet.create({
   },
   list: {
     flexDirection: "row",
+    width: Dimensions.get("window").width * 0.8,
+    paddingBottom: 10,
   },
   listText: {
     color: theme.colorBlack,
     fontSize: 20,
+  },
+  itemMarker: {
+    paddingRight: 8,
+    paddingLeft: 15,
   },
 });

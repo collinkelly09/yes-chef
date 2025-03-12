@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
 import React from "react";
 import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../utils/types";
@@ -22,7 +22,7 @@ export default function RecipePage({ route }: RecipePageProps) {
   if (recipeLoading) return <Loading />;
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {recipeData && (
         <View>
           <View style={styles.heading}>
@@ -45,15 +45,16 @@ export default function RecipePage({ route }: RecipePageProps) {
           <RecipeDetailList dataList={recipeData.steps} type="Steps" />
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     marginTop: theme.headerSpace,
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
     paddingTop: 35,
+    paddingBottom: 35,
   },
   heading: {
     flexDirection: "row",
