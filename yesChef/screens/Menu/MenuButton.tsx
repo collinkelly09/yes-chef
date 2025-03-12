@@ -11,23 +11,17 @@ interface Props {
 }
 
 export default function MenuButton({ props, pageName }: Props) {
-  const buttons: Record<string, any> = {
+  const buttons: Record<string, string> = {
     HomeStack: "Home",
     RecipeStack: "Recipes",
   };
 
-  // Todo REFACTOR ONCE MORE STACKS ARE ADDED
   const handleNavigation = (page: string) => {
-    if (page === "HomeStack") {
-      props.navigation.navigate(page);
+    props.navigation.navigate(page);
 
-      // Todo Type 'string' is not assignable to type 'never'
-      // Todo FIX TYPING ISSUE
-      // ! Name has a type of "RouteName extends string" but reads as never
-      navigation.reset({ index: 0, routes: [{ name: "Home" }] });
-    } else {
-      props.navigation.navigate(page);
-    }
+    // Todo Type 'string' is not assignable to type 'never'
+    // ! Name has a type of "RouteName extends string" but reads as never
+    navigation.reset({ index: 0, routes: [{ name: buttons[page] }] });
   };
 
   const navigation = useNavigation();
