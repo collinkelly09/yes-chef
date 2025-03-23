@@ -21,7 +21,7 @@ export default function MenuButton({ props, pageName }: Props) {
 
     // Todo Type 'string' is not assignable to type 'never'
     // ! Name has a type of "RouteName extends string" but reads as never
-    navigation.reset({ index: 0, routes: [{ name: buttons[page] }] });
+    navigation.reset({ index: 0, routes: [{ name: buttons[page] as never }] });
   };
 
   const navigation = useNavigation();
